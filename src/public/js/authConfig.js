@@ -26,15 +26,15 @@ function showRegisterForm() {
   }
   
   function openLoginModal() {
-    showLoginForm();
     setTimeout(function() {
+      showLoginForm();
       $('#loginModal').modal('show');
     }, 230);
   }
   
   function openRegisterModal() {
-    showRegisterForm();
     setTimeout(function() {
+      showRegisterForm();
       $('#loginModal').modal('show');
     }, 230);
   }
