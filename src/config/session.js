@@ -19,7 +19,7 @@ let configSession = (app) => {
     secret : "mySecret" ,
     store : sessionStore ,
     resave : true , 
-    saveUninitialized : false  ,
+    saveUninitialized : false ,
     cookie : {
       maxAge : 3600 * 24 * 1000
     }

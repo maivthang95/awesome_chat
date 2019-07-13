@@ -21,7 +21,12 @@ function nineScrollRight() {
   });
   $('.right .chat').scrollTop($('.right .chat')[0].scrollHeight);
 }
-
+function flashMasterNotify(){
+  let notify = $(".master-success-message").text();
+  if(notify.length){
+    alertify.notify(notify , "success" , 7)
+  }
+}
 function enableEmojioneArea(chatId) {
   $('.write-chat[data-chat="' + chatId + '"]').emojioneArea({
     standalone: false,
@@ -171,4 +176,7 @@ $(document).ready(function() {
 
   // Action hủy việc tạo nhóm trò chuyện
   cancelCreateGroup();
+
+  //Flash message o man hinh master
+  flashMasterNotify();
 });
