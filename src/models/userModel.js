@@ -1,5 +1,5 @@
 import mongoose from "mongoose" ; 
-
+import bcrypt from "bcrypt";
 let Schema = mongoose.Schema ;
 
 let userSchema = new Schema({
@@ -51,6 +51,18 @@ userSchema.statics = {
       {"local.verifyToken" : token },
       {"local.isActive" : true , "local.verifyToken"  : null }
     ).exec();
+  },
+
+  findUserById(id){
+    return this.findById(id).exec();
   }
-}
+};
+
+userSchema.methods = {
+  ComparePassword(password){
+    return bcrypt.compare(password , this.local.password);
+  }
+}; 
+
 module.exports = mongoose.model("user" , userSchema)
+
