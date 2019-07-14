@@ -16,10 +16,11 @@ export const transErrors = {
 
 export const transSuccess = {
   userCreated : (userEmail) => {
-    return `Tai khoan <strong>${userEmail}</strong> da duoc tao, vui long kiem tra email de kich hoat tai khoan truoc khi dang nhap` 
+    return `Tai khoan <strong> ${userEmail} </strong> da duoc tao, vui long kiem tra email de kich hoat tai khoan truoc khi dang nhap` 
   },
   account_active : "Kich hoat tai khoan thanh cong, ban da co the dang nhap vao ung dung",
-  login_success : (username) => `Xin chao ${username} , chuc ban mot ngay tot lanh`
+  login_success : (username) => `Xin chao ${username} , chao mung ban da den voi Awesome Chat`,
+  logout_success : `Dang xuat tai khoan thanh cong`
 }
 
 export const transMail = {
