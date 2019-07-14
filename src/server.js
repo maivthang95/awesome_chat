@@ -14,6 +14,9 @@ connectDB();
 //Config Session
 configSession(app);
 
+//Enable post data for request
+app.use(bodyParser.urlencoded({extended : true }));
+
 //Config view engine 
 configViewEngine(app) ;
 
