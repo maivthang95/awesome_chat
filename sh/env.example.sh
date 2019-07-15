@@ -15,3 +15,8 @@ export MAIL_USER=***
 export MAIL_PASSWORD=***
 export MAIL_HOST=***
 export MAIL_PORT=***
+
+#Config login facebook app
+export FB_APP_ID=***
+export FB_APP_SECRET=***
+export FB_CALLBACK_URL=*** #http://localhost:3000/auth/facebook/callback

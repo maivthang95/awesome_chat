@@ -56,13 +56,6 @@ let logoutAccount = (req , res) => {
 }
 
 //Kiem tra da dang nhap chua
-let checkLoggedIn = (req , res , next) => {
-  if(!req.isAuthenticated()){
-    return res.redirect("/login-register");
-  }
-  next();
-}
-
 let checkLoggedOut = (req , res , next) => {
   if(req.isAuthenticated()){
     return res.redirect("/");
@@ -70,6 +63,12 @@ let checkLoggedOut = (req , res , next) => {
   next();
 }
 
+let checkLoggedIn = (req , res , next) => {
+  if(!req.isAuthenticated()){
+    return res.redirect("/login-register") ; 
+  }
+  next();
+}
 
 
 module.exports = {
