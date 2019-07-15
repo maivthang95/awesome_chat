@@ -9,65 +9,66 @@ import passport from "passport";
 import pem from "pem" ;
 import https from "https";
 
-pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
-  if (err) {
-    throw err
-  }
-  let app = express()
+// pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
+//   if (err) {
+//     throw err
+//   }
+//   let app = express()
 
-  connectDB();
+//   connectDB();
 
-  //Config Session
-  configSession(app);
+//   //Config Session
+//   configSession(app);
 
-  //Enable post data for request
-  app.use(bodyParser.urlencoded({extended : true }));
+//   //Enable post data for request
+//   app.use(bodyParser.urlencoded({extended : true }));
 
-  //Config view engine 
-  configViewEngine(app) ;
+//   //Config view engine 
+//   configViewEngine(app) ;
 
-  //Eanble post data request
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({extended : true }));
+//   //Eanble post data request
+//   app.use(bodyParser.json());
+//   app.use(bodyParser.urlencoded({extended : true }));
 
-  //enable flash messages
-  app.use(connectFlash())
+//   //enable flash messages
+//   app.use(connectFlash())
 
-  //Config passport 
-  app.use(passport.initialize());
-  app.use(passport.session());
+//   //Config passport 
+//   app.use(passport.initialize());
+//   app.use(passport.session());
 
-  //Init all routes
-  initRoutes(app);
+//   //Init all routes
+//   initRoutes(app);
 
-  https.createServer({ key: keys.serviceKey, cert: keys.certificate }, app).listen(process.env.APP_PORT , process.env.APP_HOST , () => console.log(`Server is running on port ${process.env.APP_PORT} , host : ${process.env.APP_HOST }`));
-})
-// Init app
-// let app = express() ;
+//   https.createServer({ key: keys.serviceKey, cert: keys.certificate }, app).listen(process.env.APP_PORT , process.env.APP_HOST , () => console.log(`Server is running on port ${process.env.APP_PORT} , host : ${process.env.APP_HOST }`));
+// })
 
-// connectDB();
+//Init app
+let app = express() ;
 
-// //Config Session
-// configSession(app);
+connectDB();
 
-// //Enable post data for request
-// app.use(bodyParser.urlencoded({extended : true }));
+//Config Session
+configSession(app);
 
-// //Config view engine 
-// configViewEngine(app) ;
+//Enable post data for request
+app.use(bodyParser.urlencoded({extended : true }));
 
-// //Eanble post data request
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({extended : true }));
+//Config view engine 
+configViewEngine(app) ;
 
-// //enable flash messages
-// app.use(connectFlash())
+//Eanble post data request
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended : true }));
 
-// //Config passport 
-// app.use(passport.initialize());
-// app.use(passport.session());
+//enable flash messages
+app.use(connectFlash())
 
-// //Init all routes
-// initRoutes(app);
-// app.listen(process.env.APP_PORT , process.env.APP_HOST , () => console.log(`Server is running on port ${process.env.APP_PORT} , host : ${process.env.APP_HOST }`));
+//Config passport 
+app.use(passport.initialize());
+app.use(passport.session());
+
+//Init all routes
+initRoutes(app);
+app.listen(process.env.APP_PORT , process.env.APP_HOST , () => console.log(`Server is running on port ${process.env.APP_PORT} , host : ${process.env.APP_HOST }`));
 
