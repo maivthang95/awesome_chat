@@ -11,7 +11,9 @@ export const transErrors = {
   account_not_active : "Tai khoan chua duoc kich hoat , vui long truy cap email cua ban de kich hoat ",
   token_undifined : "Token khong ton tai",
   login_failed :  "Sai tai khoan hoac mat khau",
-  server_error : "Co loi tu he thong, vui long thu lai"
+  server_error : "Co loi tu he thong, vui long thu lai",
+  avatar_type : "Kieu file khong hop le, chi chap nhan jpg,jpeg,png" ,
+  avatar_size : "Anh upload toi da chi duoc 1MB"
 };
 
 export const transSuccess = {
@@ -20,7 +22,8 @@ export const transSuccess = {
   },
   account_active : "Kich hoat tai khoan thanh cong, ban da co the dang nhap vao ung dung",
   login_success : (username) => `Xin chao ${username} , chao mung ban da den voi Awesome Chat`,
-  logout_success : `Dang xuat tai khoan thanh cong`
+  logout_success : `Dang xuat tai khoan thanh cong` ,
+  avatar_updated : "Cap nhat hinh anh thanh cong"
 }
 
 export const transMail = {
