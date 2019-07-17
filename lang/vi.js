@@ -2,7 +2,11 @@ export const transValidation = {
   email_incorrect : "Dia chi email khong hop le" , 
   gender_incorrect : "Gioi tinh da bi thay doi" , 
   password_incorrect : "Mat khau phai co it nhat 8 ky tu ,gom chu thuong , chu hoa , so va ky tu" ,
-  password_confirmation_incorrect : "Mat khau nhap lai khong trung khop"
+  password_confirmation_incorrect : "Mat khau nhap lai khong trung khop" ,
+  update_username : "Username co do dai trong hoang 3 den 20 ky tu va khong chua ky tu dac biet", 
+  update_gender : "Xin dung thay doi dtruong nay", 
+  update_address : "Dia chi khong hop le", 
+  update_phone : "So dien thoai bat dau bang 0 va gioi han trong khoang 10 den 11 ky tu", 
 };
 
 export const transErrors = {
@@ -23,7 +27,8 @@ export const transSuccess = {
   account_active : "Kich hoat tai khoan thanh cong, ban da co the dang nhap vao ung dung",
   login_success : (username) => `Xin chao ${username} , chao mung ban da den voi Awesome Chat`,
   logout_success : `Dang xuat tai khoan thanh cong` ,
-  avatar_updated : "Cap nhat hinh anh thanh cong"
+  avatar_updated : "Cap nhat hinh anh thanh cong" ,
+  userInfo_updated : "Cap nhat thong tin thanh cong"
 }
 
 export const transMail = {
