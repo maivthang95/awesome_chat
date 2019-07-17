@@ -13,11 +13,14 @@ export const transErrors = {
   account_in_use : "Email da duoc su dung" ,
   account_removed : "Tai khoan da bi xoa" ,
   account_not_active : "Tai khoan chua duoc kich hoat , vui long truy cap email cua ban de kich hoat ",
+  account_undefined : `Tai khoan khong ton tai`,
   token_undifined : "Token khong ton tai",
   login_failed :  "Sai tai khoan hoac mat khau",
   server_error : "Co loi tu he thong, vui long thu lai",
   avatar_type : "Kieu file khong hop le, chi chap nhan jpg,jpeg,png" ,
-  avatar_size : "Anh upload toi da chi duoc 1MB"
+  avatar_size : "Anh upload toi da chi duoc 1MB" ,
+  password_error : `Mat khau khong dung`
+  
 };
 
 export const transSuccess = {
@@ -28,7 +31,8 @@ export const transSuccess = {
   login_success : (username) => `Xin chao ${username} , chao mung ban da den voi Awesome Chat`,
   logout_success : `Dang xuat tai khoan thanh cong` ,
   avatar_updated : "Cap nhat hinh anh thanh cong" ,
-  userInfo_updated : "Cap nhat thong tin thanh cong"
+  userInfo_updated : "Cap nhat thong tin thanh cong",
+  password_updated : `Cap nhat mat khau thanh cong`
 }
 
 export const transMail = {

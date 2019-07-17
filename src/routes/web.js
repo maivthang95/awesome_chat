@@ -44,7 +44,8 @@ let initRoutes = (app) => {
   router.get("/logout" , auth.checkLoggedIn ,auth.logoutAccount)
 
   router.put("/user/update-avatar" , auth.checkLoggedIn , user.updateAvatar );
-  router.put("/user/update-info" , auth.checkLoggedIn , userValid.updateInfo, user.updateInfo)
+  router.put("/user/update-info" , auth.checkLoggedIn , userValid.updateInfo, user.updateInfo);
+  router.put("/user/update-password" , auth.checkLoggedIn ,userValid.updatePassword , user.updatePassword)
   app.use("/" , router )
 }
 
