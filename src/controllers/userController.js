@@ -72,7 +72,7 @@ let updateInfo = async (req , res) => {
   try {
 
     let updateUserItem = req.body ;
-     
+     console.log(req.body);
     await user.updateUser(req.user._id , updateUserItem );
 
     let result = {
