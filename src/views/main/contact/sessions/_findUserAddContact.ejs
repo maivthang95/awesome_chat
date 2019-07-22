@@ -2,7 +2,7 @@
   <li class="_contactList" data-uid="<%= user._id %>">
     <div class="contactPanel">
         <div class="user-avatar">
-            <img src="/images/users/<%= user.avatar %>" alt="">
+            <img <% if(user.avatar == "avatar-default.jpg") {%> src="/images/users/default/<%= user.avatar %>" <%} else {%>  src="/images/users/<%= user.avatar %>" <%}%>  alt="">
         </div>
         <div class="user-name">
             <p>

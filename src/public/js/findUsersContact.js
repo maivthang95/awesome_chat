@@ -12,9 +12,18 @@ function callFindUsers(element){
       alertify.notify("Lỗi từ khóa tìm kiếm, chỉ cho phép chữ cái và số" , "error" , 5)
     }
 
-    $.get(`/contact/find-users/${keyword}` , function(data) {
-      $("#find-user ul").html(data);
-    })
+    // $.get(`/contact/find-users/${keyword}` , function(data) {
+    //   $("#find-user ul").html(data);
+    //})
+    $.ajax({
+      type: "get",
+      url: `/contact/find-users/${keyword}`,
+      success: function (data) {
+        $("#find-user ul").html(data);
+        addContact();
+        removeRequestContact();
+      }
+    });
   }
 }
 

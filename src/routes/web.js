@@ -48,6 +48,8 @@ let initRoutes = (app) => {
   router.put("/user/update-password" , auth.checkLoggedIn , userValid.updatePassword , user.updatePassword)
 
   router.get("/contact/find-users/:keyword" , auth.checkLoggedIn, contactValid.findUserContact ,  contact.findUserContact);
+  router.post("/contact/add-new" , auth.checkLoggedIn , contact.addNew);
+  router.delete("/contact/remove-request-contact" , auth.checkLoggedIn , contact.removeRequestContact)
   app.use("/" , router )
 }
 
