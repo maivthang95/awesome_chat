@@ -33,19 +33,33 @@
               <li>
                   <a href="#contactsModal" data-toggle="modal" title="Quản lý liên lạc" id="show-modal-contacts">
                       <i class="fa fa-user-plus"></i>
-                      <div class="noti_contact_counter"></div>
+                      <div class="noti_contact_counter">99</div>
                   </a>
               </li>
               <li>
                   <a href="#" id="noti_Button" data-toggle="modal" title="Thông báo">
                       <i class="fa fa-globe"></i>
-                      <div class="noti_counter"></div>
+                        <%if (notifications.length > 0) {%>
+                        <div class="noti_counter">
+                            <%= notifications.length %>
+                        </div>
+                        <%}else {%>
+                            <div class="noti_counter display-none"></div>
+                        <%}%>
+                     
                       <div id="noti_Container">
                           <div id="notifications">
                               <h3>Thông báo</h3>
-                              <div class="noti_content">
-                                 <!--Notification content-->
+                                <div class="noti_content">  
+                                    <% if (notifications) {%>
+                                        <% notifications.forEach( item => { %>
+                                            <%- item %>
+                                        <%})%>
+                                    <%}%>
+                                </div>
+                                
                               <div class="seeAll"><a href="#">Xem tất cả</a></div>
+                             
                           </div>
                       </div>
                   </a>
