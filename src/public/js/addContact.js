@@ -9,9 +9,21 @@ function addContact(){
         $("#find-user").find(`div.user-remove-request-contact[data-uid = ${targetId}]`).css("display" , "inline-block")
         increaseNotificationContact("count-request-contact-sent");
         socket.emit("add-new-contact" , {contactId : targetId});
+       
       }
     })
 
   })
 }
 
+socket.on("response-add-new-contact", (user) => {
+  let noti = `<span data-uid="${user.id}">
+  <img class="avatar-small" src="/images/users/${user.avatar}" alt=""> 
+  <strong>${user.username}</strong> đã gửi cho bạn một lời mời kết bạn!
+  </span><br><br><br>`
+  $(".noti_content").prepend(noti);
+  increaseNotificationContact("count-request-contact-received")
+  increaseNotification("noti_contact_counter");
+  increaseNotification("noti_counter");
+
+})
