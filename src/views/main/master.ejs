@@ -15,9 +15,8 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body onload="spinLoaded()">
-    <!--Icon loader-->
-    <div id="loader"></div>
-    
+    <!--CSS main loader-->
+    <div class="master-loader"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
     <%- include("alert/alert")%>
     <%- include('navbar/navbar') %>
     
@@ -45,8 +44,11 @@
     <script src="/js/updateUser.js"></script>
     <script src="/js/addContact.js"></script>
     <script src="/js/remove_requestContact.js"></script>
+
     <script src="/js/calculateNotifyContact.js"></script>
     <script src="/js/calculateNotification.js"></script>
+
+    <script src="/js/readMoreNotif.js"></script>
     <%- include('contact/contactModal'); %>
     
 
