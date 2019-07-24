@@ -253,8 +253,7 @@ label:focus,
   box-shadow: 0 3px 8px rgba(0, 0, 0, .20);
   z-index: 999;
 }
-
-#notifications h3 {
+#popup-mark-notif-as-read {
   display: block;
   color: #333;
   background: #FFF;
@@ -308,21 +307,22 @@ label:focus,
 }
 
 .noti_content {
-  position: relative;
   height: 300px;
   background-color: #fff;
   overflow: auto;
 }
 
-.noti_content > span {
-  position: absolute; 
+.noti_content > div{
   max-width: 95%;
-  margin-top: 5px;
-  margin-left: 7px;
+  margin : 6px ;
   color: #333;
-  padding: 5px;
+  padding: 7px;
 }
 
+.noti_content > div:hover{
+  cursor : pointer ;
+  background-color: #eceff1;
+}
 .seeAll {
   background: #F6F7F8;
   padding: 8px;
@@ -1293,4 +1293,39 @@ label:focus,
 
 .display-none {
   display: none;
+}
+
+#noti_Button:hover {
+  text-decoration : none ;
+}
+
+.list-notifications li {
+  /* border-bottom: 1px solid #dfe6e9; */
+  width: 90%;
+  height: auto;
+  padding: 5px;
+  margin: 0 auto;
+  list-style-type: none;
+}
+
+.list-notifications li div {
+  width: 100%;
+padding: 10px;
+border: 1px solid #dfe6e9;
+border-radius: 5px;
+}
+
+
+.list-notifications li div:hover {
+  cursor: pointer;
+  background-color: #eceff1;
+  
+}
+
+.read-more-notif{
+  text-align : center;
+}
+
+#link-read-more-notif:hover {
+  text-decoration: none;
 }
