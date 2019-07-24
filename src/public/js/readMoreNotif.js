@@ -13,7 +13,7 @@ $(document).ready(function () {
         return false ;
       }
       notifications.forEach( function(notification) {
-        $("ul.list-notifications").append(`<li>${notification}</li>`).fadeIn();
+        $("ul.list-notifications").append(`<li>${notification}</li>`);
       })
       $("#link-read-more-notif").css("display" , "inline-block")
       $(".read-more-notif-loading").css("display" , "none");

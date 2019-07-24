@@ -49,7 +49,21 @@ notificationSchema.statics = {
    */
   readMore(userId , skipNumber , limit){
     return this.find({"receiverId" : userId}).sort({"createdAt" : -1}).skip(skipNumber).limit(limit).exec(); 
-   }
+   },
+   /**
+    * mark notifications as read
+    * @param {string} userId 
+    * @param {Array} targetUsers 
+    */
+   markAllAsRead(userId , targetUsers){
+     return this.updateMany({
+       $and : [
+          {"receiverId" : userId} ,
+          {"senderId" : {$in : targetUsers}}
+      ]}, 
+        {"isRead" : true } 
+    ).exec();
+  } 
 }
 
 const NOTIFICATION_TYPES = {
