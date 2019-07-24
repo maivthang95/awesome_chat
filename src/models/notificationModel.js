@@ -6,7 +6,7 @@ let notificationSchema = new Schema({
   receiverId : String , 
   type : String , 
   isRead : {type : Boolean , default : false } ,
-  createdAt : {type : Number , default : Date.now() } 
+  createdAt : {type : Number , default : Date.now } 
 })
 
 
@@ -33,14 +33,23 @@ notificationSchema.statics = {
    * Count Notification Unread
    * @param {String} userId 
    */
-  accountNotifUnread(userId){
+  countNotifUnread(userId){
     return this.count({
       $and : [
         {"receiverId" : userId}, 
         {"isRead" : false}
       ]
     }).exec();
-  }
+  },
+  /**
+   * Read more notification
+   * @param {string} userId 
+   * @param {number} skipNumber 
+   * @param {number} limit 
+   */
+  readMore(userId , skipNumber , limit){
+    return this.find({"receiverId" : userId}).sort({"createdAt" : -1}).skip(skipNumber).limit(limit).exec(); 
+   }
 }
 
 const NOTIFICATION_TYPES = {
