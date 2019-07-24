@@ -39,9 +39,9 @@
               <li>
                   <a href="javascript:void(0)" id="noti_Button" data-toggle="modal" title="Thông báo">
                       <i class="fa fa-globe"></i>
-                        <%if (accountNotifUnread > 0) {%>
+                        <%if (countNotifUnread > 0) {%>
                         <div class="noti_counter">
-                            <%= accountNotifUnread %>
+                            <%= countNotifUnread %>
                         </div>
                         <%}else {%>
                             <div class="noti_counter display-none"></div>
@@ -49,7 +49,7 @@
                      
                       <div id="noti_Container">
                           <div id="notifications">
-                              <a href="javascript:void(0)" id="popup-mark-notif-as-read">
+                                <a href="javascript:void(0)" id="popup-mark-notif-as-read">
                                   <strong>Đánh dấu tất cả đã đọc</strong>
                                 </a>
                               

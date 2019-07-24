@@ -23,6 +23,6 @@ socket.on("response-remove-request-contact" , (user) => {
   $('.noti_content').find(`div[data-uid=${user.id}]`).remove();
   $("ul.list-notifications").find(`li div[data-uid=${user.id}]`).parent().remove();
   decreaseNotificationContact("count-request-contact-received")
-  decreaseNotification("noti_contact_counter");
-  decreaseNotification("noti_counter");
+  decreaseNotification("noti_contact_counter", 1);
+  decreaseNotification("noti_counter", 1);
 })

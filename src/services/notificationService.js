@@ -1,6 +1,6 @@
 import NotificationModel from "./../models/notificationModel"
 import userModel from "./../models/userModel"
-const LIMIT_NUMBER_TAKEN = 2;
+const LIMIT_NUMBER_TAKEN = 8;
 /**
  * Get notification when f5 page
  * @param {String} currentUserId 
@@ -27,7 +27,7 @@ let getNotifications = (currentUserId ) =>{
  * count notification 
  * @param {String} currentUserId 
  */
-let accountNotifUnread = (currentUserId) => {
+let countNotifUnread = (currentUserId) => {
   return new Promise( async (resolve , reject ) => {
     try {
       let notificationsUnread = await NotificationModel.model.countNotifUnread(currentUserId);
@@ -56,9 +56,25 @@ let readMore = ( currentUserId , skipNumberNotification) => {
     }
   })
 }
-
+/**
+ * Mark notification as read
+ * @param {String} userId 
+ * @param {Array} targetUsers 
+ */
+let markAllAsRead = ( userId , targetUsers) => {
+  return new Promise (async (resolve , reject ) => {
+    try {
+      await NotificationModel.model.markAllAsRead(userId , targetUsers);
+      resolve(true);
+    } catch (error) {
+      console.log(`Error when mark notification as read : ${error}`);
+      reject(false);
+    }
+  })
+}
 module.exports = {
   getNotifications : getNotifications ,
-  accountNotifUnread : accountNotifUnread,
-  readMore : readMore
+  countNotifUnread : countNotifUnread,
+  readMore : readMore ,
+  markAllAsRead : markAllAsRead
 }
