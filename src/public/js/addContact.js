@@ -7,7 +7,7 @@ function addContact(){
       if(data.success){
         $("#find-user").find(`div.user-add-new-contact[data-uid = ${targetId}]`).hide();
         $("#find-user").find(`div.user-remove-request-contact[data-uid = ${targetId}]`).css("display" , "inline-block")
-        increaseNotificationContact("count-request-contact-sent");
+        increaseNotificationContact("count-request-contact-sent" ,);
         socket.emit("add-new-contact" , {contactId : targetId});
        
       }
@@ -24,7 +24,7 @@ socket.on("response-add-new-contact", (user) => {
   $(".noti_content").prepend(noti);
   $("ul.list-notifications").prepend(`<li>${noti}</li>`);
   increaseNotificationContact("count-request-contact-received")
-  increaseNotification("noti_contact_counter");
-  increaseNotification("noti_counter");
+  increaseNotification("noti_contact_counter" , 1);
+  increaseNotification("noti_counter" , 1);
 
 })
