@@ -52,7 +52,10 @@ let initRoutes = (app) => {
   router.delete("/contact/remove-request-contact" , auth.checkLoggedIn , contact.removeRequestContact);
 
   router.get("/notification/read-more" , auth.checkLoggedIn , notification.readMore );
-  router.put("/notification/mark-all-as-read" , auth.checkLoggedIn , notification.markAllAsRead)
+  router.put("/notification/mark-all-as-read" , auth.checkLoggedIn , notification.markAllAsRead);
+  router.get("/contacts/read-more-contacts" , auth.checkLoggedIn , contact.readMoreContacts);
+  router.get("/contacts/read-more-contacts-sent" , auth.checkLoggedIn , contact.readMoreContactsSent);
+  router.get("/contacts/read-more-contacts-received" , auth.checkLoggedIn , contact.readMoreContactsReceived)
   app.use("/" , router )
 }
 
