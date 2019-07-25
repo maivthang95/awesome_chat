@@ -21,7 +21,7 @@ function callFindUsers(element){
       success: function (data) {
         $("#find-user ul").html(data);
         addContact();
-        removeRequestContact();
+        removeRequestContactSent();
       }
     });
   }
