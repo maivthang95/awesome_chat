@@ -13,7 +13,6 @@ function addContact(){
 
         $("#request-contact-sent").find("ul").prepend(userInfoHTML);
 
-        console.log(userInfoHTML);
         socket.emit("add-new-contact" , {contactId : targetId});
         
       }

@@ -13,7 +13,7 @@ let getNotifications = (currentUserId ) =>{
     try {
       let notifications = await NotificationModel.model.getByUserIdAndLimit(currentUserId , LIMIT_NUMBER_TAKEN);
       let getNotifyContents = notifications.map( async (notification) => {
-        let sender = await userModel.findUserById(notification.senderId);
+        let sender = await userModel.getNormalUserDataById(notification.senderId);
         return NotificationModel.content.getContent(notification.type ,  notification.isRead , sender._id , sender.username , sender.avatar);
       }) ;
       //console.log(await Promise.all(getNotifyContents))

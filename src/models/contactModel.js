@@ -123,6 +123,36 @@ contactSchema.statics = {
         {"status" : false}
       ]
     }).exec()
+  },
+  /**
+   * get more contact users with limit 
+   */
+  readMoreContacts(userId , skipNumber , limit){
+    return this.find({
+      $and : [
+        {$or : [
+          {"userId" : userId } ,
+          {"contactId" : userId}
+        ]},
+        {"status" : true }
+      ]
+    }).sort({"createdAt" : -1}).skip(skipNumber).limit(limit).exec();
+  },
+  readMoreContactsSent(userId , skipNumber , limit){
+    return this.find({
+      $and : [
+        {"userId" : userId } , 
+        {"status" : false} 
+      ]
+    }).sort({"createdAt" : -1}).skip(skipNumber).limit(limit).exec();
+  },
+  readMoreContactsReceived(userId , skipNumber , limit){
+    return this.find({
+      $and : [
+        {"contactId" : userId} ,
+        {"status" : false }
+      ]
+    }).sort({"createdAt" : -1}).skip(skipNumber).limit(limit).exec();
   }
 }
 
