@@ -1,20 +1,20 @@
 
-function removeRequestContact(){
-  $(".user-remove-request-contact").bind("click" , function(){
+function removeRequestContactSent(){
+  $(".user-remove-request-contact-sent").off("click").on("click" , function(){
     let targetId = $(this).data("uid");
-    console.log(targetId);
+    
     $.ajax({
       type: "delete",
-      url: `/contact/remove-request-contact`,
+      url: `/contact/remove-request-contact-sent`,
       data: {uid: targetId},
       success: function (data) {
         if(data.success){
           $("#find-user").find(`div.user-add-new-contact[data-uid=${targetId}]`).show();
-          $("#find-user").find(`div.user-remove-request-contact[data-uid=${targetId}]`).css("display" , "none");
+          $("#find-user").find(`div.user-remove-request-contact-sent[data-uid=${targetId}]`).css("display" , "none");
           decreaseNotificationContact("count-request-contact-sent");
 
           $("#request-contact-sent").find(`li[data-uid = ${targetId}]`).remove();
-          socket.emit("remove-request-contact" , {contactId : targetId}) 
+          socket.emit("remove-request-contact-sent" , {contactId : targetId}) 
           
         }
       }
@@ -22,7 +22,11 @@ function removeRequestContact(){
   })
 }
 
-socket.on("response-remove-request-contact" , (user) => {
+$(document).ready(function () {
+  removeRequestContactSent();
+});
+
+socket.on("response-remove-request-contact-sent" , (user) => {
   $('.noti_content').find(`div[data-uid=${user.id}]`).remove();
   $("ul.list-notifications").find(`li div[data-uid=${user.id}]`).parent().remove();
   $("#request-contact-received").find(`li[data-uid = ${user.id}]`).remove();
@@ -31,3 +35,4 @@ socket.on("response-remove-request-contact" , (user) => {
   decreaseNotification("noti_counter", 1);
  
 })
+

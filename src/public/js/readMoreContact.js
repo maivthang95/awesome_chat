@@ -62,6 +62,7 @@ function callReadMoreContacts(){
                       </li>`;
      }
      $("#contacts ul").append(userContactInfor);
+     
     })
     $("#link-read-more-contacts").css("display" , "inline-block")
     $(".read-more-contacts-loading").css("display" , "none");
@@ -98,13 +99,13 @@ function callReadMoreContactsSent(){
                                 <div class="user-address">
                                     <span>${user.address ? user.address : ""} </span>
                                 </div>
-                                <div class="user-remove-request-sent action-danger" data-uid="user._id">
+                                <div class="user-remove-request-contact-sent action-danger display-important" data-uid="${user._id}">
                                     Hủy yêu cầu
                                 </div>
                             </div>
                         </li>`;
      }else {
-     userContactInfor = `<li class="_contactList" data-uid="<%= user._id %>">
+     userContactInfor = `<li class="_contactList" data-uid="${user._id}">
                         <div class="contactPanel">
                             <div class="user-avatar">
                                 <img src="/images/users/${user.avatar}" alt="">
@@ -118,13 +119,14 @@ function callReadMoreContactsSent(){
                             <div class="user-address">
                                 <span>${user.address ? user.address : ""}</span>
                             </div>
-                            <div class="user-remove-request-sent action-danger" data-uid="user._id">
+                            <div class="user-remove-request-contact-sent action-danger display-important" data-uid="${user._id}">
                                 Hủy yêu cầu
                             </div>
                         </div>
                     </li>`;
      }
      $("#request-contact-sent ul").append(userContactInfor);
+     removeRequestContactSent();
     })
     $("#link-read-more-contactsSent").css("display" , "inline-block") ; 
     $(".read-more-contactsSent-loading").css("display" , "none");
@@ -194,6 +196,7 @@ function callReadMoreContactsReceived(){
                           </li>`;
       }
       $("#request-contact-received ul").append(userReceivedInfo);
+      
     })
     $("#link-read-more-contactsReceived").css("display" , "inline-block");
     $(".read-more-contactsReceived-loading").css("display" , "none") ;

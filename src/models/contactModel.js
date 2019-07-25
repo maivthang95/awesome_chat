@@ -49,7 +49,7 @@ contactSchema.statics = {
    * @param {String} userId 
    * @param {String} contactId 
    */
-  removeRequestContact(userId , contactId ){
+  removeRequestContactSent(userId , contactId ){
     return this.remove({
       $and :[
         {"userId" : userId} ,
