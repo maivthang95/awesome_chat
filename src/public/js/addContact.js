@@ -7,9 +7,15 @@ function addContact(){
       if(data.success){
         $("#find-user").find(`div.user-add-new-contact[data-uid = ${targetId}]`).hide();
         $("#find-user").find(`div.user-remove-request-contact[data-uid = ${targetId}]`).css("display" , "inline-block")
-        increaseNotificationContact("count-request-contact-sent" ,);
+        increaseNotificationContact("count-request-contact-sent" );
+
+        let userInfoHTML = $("#find-user").find(`ul li[data-uid = ${targetId}]`).get(0).outerHTML ; 
+
+        $("#request-contact-sent").find("ul").prepend(userInfoHTML);
+
+        console.log(userInfoHTML);
         socket.emit("add-new-contact" , {contactId : targetId});
-       
+        
       }
     })
 
@@ -26,5 +32,52 @@ socket.on("response-add-new-contact", (user) => {
   increaseNotificationContact("count-request-contact-received")
   increaseNotification("noti_contact_counter" , 1);
   increaseNotification("noti_counter" , 1);
-
+  let userInfoHTML ;
+  if(user.avatar == "avatar-default.jpg"){
+  userInfoHTML = ` <li class="_contactList" data-uid="${user.id}">
+                        <div class="contactPanel">
+                            <div class="user-avatar">
+                                <img src="/images/users/default/${user.avatar}" alt="">
+                            </div>
+                            <div class="user-name">
+                                <p>
+                                    ${user.username}
+                                </p>
+                            </div>
+                            <br>
+                            <div class="user-address">
+                                <span>${user.address}</span>
+                            </div>
+                            <div class="user-acccept-contact-received" data-uid="user._id">
+                                Chấp nhận
+                            </div>
+                            <div class="user-reject-request-contact-received action-danger" data-uid="user._id">
+                                Xóa yêu cầu
+                            </div>
+                        </div>
+                      </li>`
+  }
+  else userInfoHTML = ` <li class="_contactList" data-uid="${user.id}">
+                        <div class="contactPanel">
+                            <div class="user-avatar">
+                                <img src="/images/users/${user.avatar}" alt="">
+                            </div>
+                            <div class="user-name">
+                                <p>
+                                    ${user.username}
+                                </p>
+                            </div>
+                            <br>
+                            <div class="user-address">
+                                <span>${user.address}</span>
+                            </div>
+                            <div class="user-acccept-contact-received" data-uid="user._id">
+                                Chấp nhận
+                            </div>
+                            <div class="user-reject-request-contact-received action-danger" data-uid="user._id">
+                                Xóa yêu cầu
+                            </div>
+                        </div>
+                      </li>`
+  $("#request-contact-received").find("ul").prepend(userInfoHTML);
 })

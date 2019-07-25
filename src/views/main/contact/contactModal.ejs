@@ -9,13 +9,35 @@
               <ul class="nav nav-tabs">
                   <li class="active"><a data-toggle="tab" href="#find-user">Tìm người dùng</a></li>
                   <li><a data-toggle="tab" id="link-contacts" href="#contacts">
-                      Danh bạ <span class="show-number-contacts count-contacts"></span>
+                      Danh bạ
+                        <% if(countAllContacts){ %>
+                            <span class="show-number-contacts count-contacts">
+                                    <em> <%= countAllContacts %></em>
+                            </span>
+                             <%} else {%> 
+                            <span class="show-number-contacts count-contacts"></span>
+                       <%}%>
+                     
                   </a></li>
                   <li><a data-toggle="tab" id="link-request-contact-sent" href="#request-contact-sent">
-                      Đang chờ xác nhận <span class="show-number-contacts count-request-contact-sent"></span>
+                      Đang chờ xác nhận 
+                        <% if(countAllContactsSent){ %>
+                            <span class="show-number-contacts count-request-contact-sent">
+                                    <em> <%= countAllContactsSent %></em>
+                            </span>
+                            <%} else {%> 
+                            <span class="show-number-contacts count-request-contact-sent "></span>
+                         <%}%>
                   </a></li>
                   <li><a data-toggle="tab" id="link-request-contact-received" href="#request-contact-received">
-                      Yêu cầu kết bạn <span class="show-number-contacts count-request-contact-received"></span>
+                      Yêu cầu kết bạn 
+                       <% if(countAllContactsReceived){ %>
+                            <span class="show-number-contacts count-request-contact-received">
+                                <em> <%= countAllContactsReceived %></em>
+                            </span>
+                            <%} else {%> 
+                            <span class="show-number-contacts count-request-contact-received"></span>
+                        <%}%>
                   </a></li>
               </ul>
               <div class="tab-content">
@@ -39,82 +61,115 @@
                   <div id="contacts" class="tab-pane fade">
                       <div class="find-user-bottom">
                           <ul class="contactList">
-                              <li class="_contactList" data-uid="user._id">
-                                  <div class="contactPanel">
-                                      <div class="user-avatar">
-                                          <img src="/images/users/default-avatar-trungquandev-01.jpg" alt="">
-                                      </div>
-                                      <div class="user-name">
-                                          <p>
-                                              Trung Quân
-                                          </p>
-                                      </div>
-                                      <br>
-                                      <div class="user-address">
-                                          <span>&nbsp Hà Nội, Việt Nam.</span>
-                                      </div>
-                                      <div class="user-talk" data-uid="user._id">
-                                          Trò chuyện
-                                      </div>
-                                      <div class="user-remove-contact action-danger" data-uid="user._id">
-                                          Xóa liên hệ
-                                      </div>
-                                  </div>
-                              </li>
+                              <% contacts.forEach( user => {%>
+                                <li class="_contactList" data-uid="<%= user._id %>">
+                                        <div class="contactPanel">
+                                            <div class="user-avatar">
+                                                <img <%if (user.avatar == "avatar-default.jpg") {%> src="/images/users/default/<%= user.avatar%>" <%}else{%> src="/images/users/<%= user.avatar %>" <%}%> alt="">
+                                            </div>
+                                            <div class="user-name">
+                                                <p>
+                                                    <%= user.username %>
+                                                </p>
+                                            </div>
+                                            <br>
+                                            <div class="user-address">
+                                                <span><%= user.useraddress %></span>
+                                            </div>
+                                            <div class="user-talk" data-uid="user._id">
+                                                Trò chuyện
+                                            </div>
+                                            <div class="user-remove-contact action-danger" data-uid="user._id">
+                                                Xóa liên hệ
+                                            </div>
+                                        </div>
+                                    </li>
+                            <%})%>     
                           </ul>
+                          <hr>
+                                <div class="read-more-contacts">
+                                <a href="javascript:void(0)" id="link-read-more-notif">
+                                    <strong>Xem thêm 10 bạn bè</strong>
+                                </a>
+                                </div>
+                                <div class="read-more-contacts-loading"><div></div><div></div></div>
+                            <hr>
                       </div>
                   </div>
                   <div id="request-contact-sent" class="tab-pane fade">
                       <div class="find-user-bottom">
                           <ul class="contactList">
-                              <li class="_contactList" data-uid="user._id">
-                                  <div class="contactPanel">
-                                      <div class="user-avatar">
-                                          <img src="/images/users/default-avatar-trungquandev-01.jpg" alt="">
-                                      </div>
-                                      <div class="user-name">
-                                          <p>
-                                              Trung Quân
-                                          </p>
-                                      </div>
-                                      <br>
-                                      <div class="user-address">
-                                          <span>&nbsp Hà Nội, Việt Nam.</span>
-                                      </div>
-                                      <div class="user-remove-request-sent action-danger" data-uid="user._id">
-                                          Hủy yêu cầu
-                                      </div>
-                                  </div>
-                              </li>
+                                <% contactsSent.forEach( user => {%>
+                                    <li class="_contactList" data-uid="<%= user._id %>">
+                                            <div class="contactPanel">
+                                                <div class="user-avatar">
+                                                    <img <%if (user.avatar == "avatar-default.jpg") {%> src="/images/users/default/<%= user.avatar%>" <%}else{%> src="/images/users/<%= user.avatar %>" <%}%> alt="">
+                                                </div>
+                                                <div class="user-name">
+                                                    <p>
+                                                        <%= user.username %>
+                                                    </p>
+                                                </div>
+                                                <br>
+                                                <div class="user-address">
+                                                    <span><%= user.address %></span>
+                                                </div>
+                                                <div class="user-remove-request-sent action-danger" data-uid="user._id">
+                                                    Hủy yêu cầu
+                                                </div>
+                                            </div>
+                                        </li>
+                                <%})%>
+                              
                           </ul>
+                          <hr>
+                                <div class="read-more-contactsSent">
+                                <a href="javascript:void(0)" id="link-read-more-notif">
+                                    <strong>Xem thêm 10 người </strong>
+                                </a>
+                                </div>
+                                <div class="read-more-contactsSent-loading"><div></div><div></div></div>
+                            <hr>
                       </div>
                   </div>
                   <div id="request-contact-received" class="tab-pane fade">
                       <div class="find-user-bottom">
                           <ul class="contactList">
-                              <li class="_contactList" data-uid="user._id">
-                                  <div class="contactPanel">
-                                      <div class="user-avatar">
-                                          <img src="/images/users/default-avatar-trungquandev-01.jpg" alt="">
-                                      </div>
-                                      <div class="user-name">
-                                          <p>
-                                              Trung Quân
-                                          </p>
-                                      </div>
-                                      <br>
-                                      <div class="user-address">
-                                          <span>&nbsp Hà Nội, Việt Nam.</span>
-                                      </div>
-                                      <div class="user-acccept-contact-received" data-uid="user._id">
-                                          Chấp nhận
-                                      </div>
-                                      <div class="user-reject-request-contact-received action-danger" data-uid="user._id">
-                                          Xóa yêu cầu
-                                      </div>
-                                  </div>
-                              </li>
+                                <% contactsReceived.forEach( user => {%>
+                                    <li class="_contactList" data-uid="<%= user._id %>">
+                                            <div class="contactPanel">
+                                                <div class="user-avatar">
+                                                    <img <%if (user.avatar == "avatar-default.jpg") {%> src="/images/users/default/<%= user.avatar%>" <%}else{%> src="/images/users/<%= user.avatar %>" <%}%> alt="">
+                                                </div>
+                                                <div class="user-name">
+                                                    <p>
+                                                        <%= user.username %>
+                                                    </p>
+                                                </div>
+                                                <br>
+                                                <div class="user-address">
+                                                    <span><%= user.address %></span>
+                                                </div>
+                                                <div class="user-acccept-contact-received" data-uid="user._id">
+                                                    Chấp nhận
+                                                </div>
+                                                <div class="user-reject-request-contact-received action-danger" data-uid="user._id">
+                                                    Xóa yêu cầu
+                                                </div>
+                                            </div>
+                                        </li>
+                                        
+                                 <%})%>
+                                 
                           </ul>
+                          <hr>
+                                <div class="read-more-contactsReceived">
+                                <a href="javascript:void(0)" id="link-read-more-notif">
+                                    <strong>Xem thêm 10 yêu cầu khác</strong>
+                                </a>
+                                </div>
+                                <div class="read-more-contactsReceived-loading"><div></div><div></div></div>
+                            <hr>
                       </div>
                   </div>
               </div>

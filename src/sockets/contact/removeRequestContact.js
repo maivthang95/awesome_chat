@@ -21,7 +21,6 @@ let removeRequestContact = (io) => {
       //emit notification 
       if(clients[data.contactId]){
         emitNotifyToArray(clients , data.contactId , io ,"response-remove-request-contact" , currentUser)
-
       }
    
     })
