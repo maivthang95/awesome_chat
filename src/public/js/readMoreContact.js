@@ -162,7 +162,7 @@ function callReadMoreContactsReceived(){
                                   <div class="user-address">
                                       <span>${user.address ? user.address : ""}</span>
                                   </div>
-                                  <div class="user-acccept-contact-received" data-uid="${user._id}">
+                                  <div class="user-approve-request-contact-received" data-uid="${user._id}">
                                       Chấp nhận
                                   </div>
                                   <div class="user-remove-request-contact-received action-danger" data-uid="${user._id}">
@@ -186,7 +186,7 @@ function callReadMoreContactsReceived(){
                                   <div class="user-address">
                                       <span>${user.address ? user.address : ""}</span>
                                   </div>
-                                  <div class="user-acccept-contact-received" data-uid="${user._id}">
+                                  <div class="user-approve-request-contact-received" data-uid="${user._id}">
                                       Chấp nhận
                                   </div>
                                   <div class="user-remove-request-contact-received action-danger" data-uid="${user._id}">
@@ -197,6 +197,7 @@ function callReadMoreContactsReceived(){
       }
       $("#request-contact-received ul").append(userReceivedInfo);
       removeRequestContactReceived();
+      approveRequestContactReceived();
     })
     $("#link-read-more-contactsReceived").css("display" , "inline-block");
     $(".read-more-contactsReceived-loading").css("display" , "none") ;

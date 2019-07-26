@@ -67,7 +67,8 @@ notificationSchema.statics = {
 }
 
 const NOTIFICATION_TYPES = {
-  ADD_CONTACT : "add_contact"
+  ADD_CONTACT : "add_contact",
+  APPROVE_CONTACT : "approve_contact"
 }
 
 const NOTIFICATION_CONTENT = {
@@ -90,7 +91,25 @@ const NOTIFICATION_CONTENT = {
               <strong>${userName}</strong> đã gửi cho bạn một lời mời kết bạn!
               </div>`
     }
-    return "No matching with any notification type";
+    if(notificationType === NOTIFICATION_TYPES.APPROVE_CONTACT){
+      if(!isRead){
+        if(userAvatar == "avatar-default/jpg"){
+        return  `<div class="notif-readed-false" data-uid="${userId}">
+                <img class="avatar-small" src="/images/users/default/${userAvatar}" alt=""> 
+                <strong>${userName}</strong> chấp nhận lời mời kết bạn của bạn!
+                </div>`;
+        }
+        else return `<div class="notif-readed-false" data-uid="${userId}">
+                <img class="avatar-small" src="/images/users/${userAvatar}" alt=""> 
+                <strong>${userName}</strong> chấp nhận lời mời kết bạn của bạn!
+                </div>`;
+      }
+      return  `<div data-uid="${userId}">
+              <img class="avatar-small" src="/images/users/${userAvatar}" alt=""> 
+              <strong>${userName}</strong> chấp nhận lời mời kết bạn của bạn!
+              </div>`
+    }
+    return "Không có tin nhắn văn bản ";
   }
 }
 module.exports ={

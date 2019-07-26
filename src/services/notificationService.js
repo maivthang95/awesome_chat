@@ -72,6 +72,8 @@ let markAllAsRead = ( userId , targetUsers) => {
     }
   })
 }
+
+
 module.exports = {
   getNotifications : getNotifications ,
   countNotifUnread : countNotifUnread,
