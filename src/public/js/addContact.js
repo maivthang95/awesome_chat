@@ -7,8 +7,9 @@ function addContact(){
       if(data.success){
         $("#find-user").find(`div.user-add-new-contact[data-uid = ${targetId}]`).hide();
         $("#find-user").find(`div.user-remove-request-contact-sent[data-uid = ${targetId}]`).css("display" , "inline-block")
-        increaseNotificationContact("count-request-contact-sent" );
 
+        increaseNotificationContact("count-request-contact-sent" );// js/calculateNotifyContact.js
+        increaseNotification("noti_contact_counter" , 1); //js.calculateNotification.js
         let userInfoHTML = $("#find-user").find(`ul li[data-uid = ${targetId}]`).get(0).outerHTML ; 
 
         $("#request-contact-sent").find("ul").prepend(userInfoHTML);
@@ -34,6 +35,7 @@ socket.on("response-add-new-contact", (user) => {
   increaseNotification("noti_counter" , 1);
   let userInfoHTML ;
   if(user.avatar == "avatar-default.jpg"){
+      //Thêm modal yêu cấu kết bạn
   userInfoHTML = ` <li class="_contactList" data-uid="${user.id}">
                         <div class="contactPanel">
                             <div class="user-avatar">
@@ -48,10 +50,10 @@ socket.on("response-add-new-contact", (user) => {
                             <div class="user-address">
                                 <span>${user.address}</span>
                             </div>
-                            <div class="user-acccept-contact-received" data-uid="user._id">
+                            <div class="user-acccept-contact-received" data-uid="${user.id}">
                                 Chấp nhận
                             </div>
-                            <div class="user-reject-request-contact-received action-danger" data-uid="user._id">
+                            <div class="user-remove-request-contact-received action-danger" data-uid="${user.id}">
                                 Xóa yêu cầu
                             </div>
                         </div>
@@ -71,14 +73,14 @@ socket.on("response-add-new-contact", (user) => {
                             <div class="user-address">
                                 <span>${user.address}</span>
                             </div>
-                            <div class="user-acccept-contact-received" data-uid="user._id">
+                            <div class="user-acccept-contact-received" data-uid="${user.id}">
                                 Chấp nhận
                             </div>
-                            <div class="user-reject-request-contact-received action-danger" data-uid="user._id">
+                            <div class="user-remove-request-contact-received action-danger" data-uid="${user.id}">
                                 Xóa yêu cầu
                             </div>
                         </div>
                       </li>`
-  $("#request-contact-received").find("ul").prepend(userInfoHTML);
-  
+  $("#request-contact-received ul").prepend(userInfoHTML);
+  removeRequestContactReceived(); //js.removeRequestContactReceived.js
 })
