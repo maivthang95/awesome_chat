@@ -62,7 +62,7 @@ function callReadMoreContacts(){
                       </li>`;
      }
      $("#contacts ul").append(userContactInfor);
-     
+     removeContact();
     })
     $("#link-read-more-contacts").css("display" , "inline-block")
     $(".read-more-contacts-loading").css("display" , "none");
