@@ -225,6 +225,20 @@ let approveRequestContactReceived = (currenUserId , contactId ) => {
     resolve(true);
   })
 }
+
+let removeContact = (currentUserId , contactId) => {
+  return new Promise(async (resolve , reject ) => {
+    try {
+      let resultRemove = await contactModel.removeContact(currentUserId , contactId );
+      if(resultRemove.result.n === 0){
+        reject(false);
+      }
+      resolve(true);
+    } catch (error) {
+      reject(error);
+    }
+  })
+}
 module.exports = {
   findUserContact : findUserContact,
   addNew : addNew ,
@@ -239,5 +253,6 @@ module.exports = {
   readMoreContacts : readMoreContacts,
   readMoreContactsSent : readMoreContactsSent,
   readMoreContactsReceived : readMoreContactsReceived,
-  approveRequestContactReceived : approveRequestContactReceived
+  approveRequestContactReceived : approveRequestContactReceived,
+  removeContact : removeContact
 }

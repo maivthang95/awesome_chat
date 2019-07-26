@@ -25,6 +25,9 @@ function approveRequestContactReceived(){
           decreaseNotificationContact("count-request-contact-received"); //js/calculateNotifyContact.js
           increaseNotificationContact("count-contacts");//js/calculateNotifyContact.js
           decreaseNotification("noti_contact_counter",1);//js/calculateNotificationt.js
+          removeContact();
+          //khi làm chức năng chat thì sẽ xóa tiếp user ở phần chat
+          
           socket.emit("approve-request-contact-received" , {contactId : targetId}) 
         }
       }
@@ -100,7 +103,9 @@ socket.on("response-approve-request-contact-received" , (user) => {
     </div>
   </li>`
 
+  //khi làm chức năng chat thì sẽ xóa tiếp user ở phần chat
   $("#contacts").find("ul").prepend(userInfoHTML);
+  removeContact();
 })
 
 $(document).ready(function(){
