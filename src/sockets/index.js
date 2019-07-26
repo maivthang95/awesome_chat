@@ -1,5 +1,6 @@
 import addNewContact from "./contact/addNewContact";
-import removeRequestContactSent from "./contact/removeRequestContact"
+import removeRequestContactSent from "./contact/removeRequestContact";
+import removeRequestContactReceived from "./contact/removeRequestContactReceived"
 /**
  * 
  * @param io from socket.io lib
@@ -7,6 +8,7 @@ import removeRequestContactSent from "./contact/removeRequestContact"
 let initSockets = (io) => {
   addNewContact(io);
   removeRequestContactSent(io);
+  removeRequestContactReceived(io);
   //
 }
 

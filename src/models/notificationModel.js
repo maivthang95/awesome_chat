@@ -74,7 +74,13 @@ const NOTIFICATION_CONTENT = {
   getContent : (notificationType , isRead , userId , userName , userAvatar) => {
     if(notificationType === NOTIFICATION_TYPES.ADD_CONTACT){
       if(!isRead){
+        if(userAvatar == "avatar-default/jpg"){
         return  `<div class="notif-readed-false" data-uid="${userId}">
+                <img class="avatar-small" src="/images/users/default/${userAvatar}" alt=""> 
+                <strong>${userName}</strong> đã gửi cho bạn một lời mời kết bạn!
+                </div>`;
+        }
+        else return `<div class="notif-readed-false" data-uid="${userId}">
                 <img class="avatar-small" src="/images/users/${userAvatar}" alt=""> 
                 <strong>${userName}</strong> đã gửi cho bạn một lời mời kết bạn!
                 </div>`;

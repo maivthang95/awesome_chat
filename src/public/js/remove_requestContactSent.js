@@ -11,8 +11,8 @@ function removeRequestContactSent(){
         if(data.success){
           $("#find-user").find(`div.user-add-new-contact[data-uid=${targetId}]`).show();
           $("#find-user").find(`div.user-remove-request-contact-sent[data-uid=${targetId}]`).css("display" , "none");
-          decreaseNotificationContact("count-request-contact-sent");
-
+          decreaseNotificationContact("count-request-contact-sent"); // js/calculateNotifyContact.js
+          decreaseNotification("noti_contact_counter", 1); //js.calculateNotification.js
           $("#request-contact-sent").find(`li[data-uid = ${targetId}]`).remove();
           socket.emit("remove-request-contact-sent" , {contactId : targetId}) 
           

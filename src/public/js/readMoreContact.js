@@ -29,10 +29,10 @@ function callReadMoreContacts(){
                                 <div class="user-address">
                                     <span> ${user.address ? user.address : ""}</span>
                                 </div>
-                                <div class="user-talk" data-uid="user._id">
+                                <div class="user-talk" data-uid="${user._id}">
                                     Trò chuyện
                                 </div>
-                                <div class="user-remove-contact action-danger" data-uid="user._id">
+                                <div class="user-remove-contact action-danger" data-uid="${user._id}">
                                     Xóa liên hệ
                                 </div>
                             </div>
@@ -52,10 +52,10 @@ function callReadMoreContacts(){
                             <div class="user-address">
                                 <span> ${user.address ? user.address : ""}</span>
                             </div>
-                            <div class="user-talk" data-uid="user._id">
+                            <div class="user-talk" data-uid="${user._id}">
                                 Trò chuyện
                             </div>
-                            <div class="user-remove-contact action-danger" data-uid="user._id">
+                            <div class="user-remove-contact action-danger" data-uid="${user._id}">
                                 Xóa liên hệ
                             </div>
                         </div>
@@ -162,10 +162,10 @@ function callReadMoreContactsReceived(){
                                   <div class="user-address">
                                       <span>${user.address ? user.address : ""}</span>
                                   </div>
-                                  <div class="user-acccept-contact-received" data-uid="user._id">
+                                  <div class="user-acccept-contact-received" data-uid="${user._id}">
                                       Chấp nhận
                                   </div>
-                                  <div class="user-reject-request-contact-received action-danger" data-uid="user._id">
+                                  <div class="user-remove-request-contact-received action-danger" data-uid="${user._id}">
                                       Xóa yêu cầu
                                   </div>
                               </div>
@@ -186,17 +186,17 @@ function callReadMoreContactsReceived(){
                                   <div class="user-address">
                                       <span>${user.address ? user.address : ""}</span>
                                   </div>
-                                  <div class="user-acccept-contact-received" data-uid="user._id">
+                                  <div class="user-acccept-contact-received" data-uid="${user._id}">
                                       Chấp nhận
                                   </div>
-                                  <div class="user-reject-request-contact-received action-danger" data-uid="user._id">
+                                  <div class="user-remove-request-contact-received action-danger" data-uid="${user._id}">
                                       Xóa yêu cầu
                                   </div>
                               </div>
                           </li>`;
       }
       $("#request-contact-received ul").append(userReceivedInfo);
-      
+      removeRequestContactReceived();
     })
     $("#link-read-more-contactsReceived").css("display" , "inline-block");
     $(".read-more-contactsReceived-loading").css("display" , "none") ;
