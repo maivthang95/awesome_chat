@@ -16,12 +16,12 @@ let getAllConversationItems = (currentUserId) => {
         if(contact.contactId == currentUserId){
           let user = await userModel.getNormalUserDataById(contact.userId);
           user = user.toObject();  
-          user.createdAt = contact.createdAt ; 
+          user.updatedAt = contact.updatedAt ; 
           return user;
         }else{
           let user= await userModel.getNormalUserDataById(contact.contactId) ;
           user = user.toObject();  
-          user.createdAt = contact.createdAt ;
+          user.updatedAt = contact.updatedAt ;
           return user;
         }
       })
@@ -29,7 +29,7 @@ let getAllConversationItems = (currentUserId) => {
 
       let groupConversations = await chatGroupModel.getChatGroups(currentUserId , LIMIT_CONVERSATION) ; 
       let allConversations = usersConversation.concat(groupConversations);
-      allConversations = _.sortBy(allConversations , (item) => -item.createdAt)
+      allConversations = _.sortBy(allConversations , (item) => -item.updatedAt)
 
       resolve({usersConversation: usersConversation , 
                 groupConversations : groupConversations ,

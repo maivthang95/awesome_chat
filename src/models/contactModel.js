@@ -71,7 +71,7 @@ contactSchema.statics = {
          ]} , 
          {"status" : true}
       ]}
-    ).sort({"createdAt" : -1}).limit(limit).exec();
+    ).sort({"updatedAt" : -1}).limit(limit).exec();
   },
   getContactsSent(userId , limit){
     return this.find({
@@ -153,7 +153,7 @@ contactSchema.statics = {
         {"contactId" : userId} ,
         {"status" : false }
       ]
-    }).sort({"createdAt" : -1}).skip(skipNumber).limit(limit).exec();
+    }).sort({"updatedAt" : -1}).skip(skipNumber).limit(limit).exec();
   },
   removeRequestContactReceived(userId , contactId){
     return this.remove({
@@ -171,7 +171,10 @@ contactSchema.statics = {
         {"contactId" : userId} , 
         {"status" : false }
         ]
-      },  {"status" : true , $currentDate : { "createdAt" : true }}).exec();
+        },{
+           "status" : true  ,
+            "updatedAt" : Date.now()
+       }).exec();
   },
   removeContact(userId , contactId){
     return this.remove({
