@@ -3,7 +3,7 @@ import userModel from "./../models/userModel";
 import NotificationModel from "./../models/notificationModel"
 import _ from "lodash";
 
-const LIMIT_NUMBER = 2 ; 
+const LIMIT_NUMBER = 4 ; 
 let findUserContact = ( currentUserId , keyword ) => {
   return new Promise ( async (resolve , reject) => {
     let deprecatedUserIds = [currentUserId]  ;

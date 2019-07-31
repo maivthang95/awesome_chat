@@ -171,7 +171,7 @@ contactSchema.statics = {
         {"contactId" : userId} , 
         {"status" : false }
         ]
-      }, {"status" : true}).exec();
+      },  {"status" : true , $currentDate : { "createdAt" : true }}).exec();
   },
   removeContact(userId , contactId){
     return this.remove({

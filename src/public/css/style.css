@@ -677,7 +677,7 @@ label:focus,
 }
 
 .left a.create-group-chat {
-  display: none;
+  display: block;
   float: left;
   width: 40px;
   height: 40px;
@@ -1286,7 +1286,14 @@ border-radius: 5px;
   
 }
 
-.read-more-notif , .read-more-contacts , .read-more-contactsSent , .read-more-contactsReceived{
+.read-more-notif ,
+.read-more-contacts , 
+.read-more-contactsSent , 
+.read-more-contactsReceived,
+.read-more-group-chat,
+.read-more-all-chat,
+.read-more-user-chat
+{
   text-align : center;
 }
 
@@ -1530,4 +1537,8 @@ border-radius: 5px;
 
 .display-important{
   display: inline-block !important;
+}
+
+.tab-content > .active{
+  background-color: #fff;
 }
