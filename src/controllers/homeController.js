@@ -1,5 +1,5 @@
 import {notification,contact,message} from "./../services/index"
-import {bufferToBase64} from "./../helpers/clientHelper"
+import {bufferToBase64 ,lastItemOfArray , convertTimeStampToHumanTime} from "./../helpers/clientHelper"
 let getHome = async (req , res) => {
   //only 10 items one time
   let notifications = await notification.getNotifications(req.user._id);
@@ -22,9 +22,7 @@ let getHome = async (req , res) => {
   let countAllContactsReceived = await contact.countAllContactsReceived(req.user._id);
 
   let getAllConversationItems = await message.getAllConversationItems(req.user._id);
-  let allConversations = getAllConversationItems.allConversations ;
-  let usersConversation = getAllConversationItems.usersConversation ;
-  let groupConversations = getAllConversationItems.groupConversations ;
+
   let allConversationsWithMessages = getAllConversationItems.allConversationsWithMessages ; 
 
    res.render("main/home/home" , {
@@ -39,11 +37,11 @@ let getHome = async (req , res) => {
     countAllContacts : countAllContacts ,
     countAllContactsSent : countAllContactsSent,
     countAllContactsReceived : countAllContactsReceived,
-    allConversations : allConversations , 
-    usersConversation : usersConversation , 
-    groupConversations : groupConversations,
+
     allConversationsWithMessages : allConversationsWithMessages,
-    bufferToBase64 : bufferToBase64
+    bufferToBase64 : bufferToBase64,
+    lastItemOfArray : lastItemOfArray,
+    convertTimeStampToHumanTime : convertTimeStampToHumanTime
   }); 
 }
 
