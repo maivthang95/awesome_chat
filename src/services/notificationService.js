@@ -47,7 +47,7 @@ let readMore = ( currentUserId , skipNumberNotification) => {
     try {
       let newNotifications = await NotificationModel.model.readMore(currentUserId , skipNumberNotification , LIMIT_NUMBER_TAKEN )
       let getNotifyContents = newNotifications.map( async (notification) => {
-        let sender = await userModel.findUserById(notification.senderId);
+        let sender = await userModel.findUserByIdForSessionToUse(notification.senderId);
         return NotificationModel.content.getContent(notification.type ,  notification.isRead , sender._id , sender.username , sender.avatar);
       })
       resolve(await Promise.all(getNotifyContents));
