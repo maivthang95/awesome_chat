@@ -8,12 +8,12 @@ let messageSchema = new Schema({
   messageType : String ,
   sender : {
     id :String ,
-    username : String , 
+    name : String , 
     avatar : String 
   },
   receiver : {
     id :String ,
-    username : String ,
+    name : String ,
     avatar : String 
   }, 
   text: String ,
@@ -25,12 +25,19 @@ let messageSchema = new Schema({
 
 messageSchema.statics = {
   /**
-   * get Limit messages item one time
+   * create new message
+   * @param {object} item 
+   */
+  createNew(item){
+    return this.create(item);
+  },
+  /**
+   * get Limit messages in personal
    * @param {string} senderId 
    * @param {string} receiverId 
    * @param {number} limit 
    */
-  getMessages(senderId , receiverId , limit){
+  getMessagesInPersonal(senderId , receiverId , limit){
     return this.find({
       $or : [
         {$and : [
@@ -42,7 +49,14 @@ messageSchema.statics = {
           {"receiverId" : senderId}
         ]}
       ]
-    }).sort({"createdAt" : 1}).limit(limit).exec();
+    }).sort({"createdAt" : -1}).limit(limit).exec();
+  },/**
+   * get message in spicific group
+   * @param {string} receiverId 
+   * @param {number} limit 
+   */
+  getMessagesInGroup(receiverId , limit){
+   return this.find({"receiverId" : receiverId}).sort({"createdAt" : -1}).limit(limit).exec();
   }
 }
 

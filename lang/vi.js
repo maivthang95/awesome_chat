@@ -7,7 +7,8 @@ export const transValidation = {
   update_gender : "Xin dung thay doi dtruong nay", 
   update_address : "Dia chi khong hop le", 
   update_phone : "So dien thoai bat dau bang 0 va gioi han trong khoang 10 den 11 ky tu", 
-  keyword_find_user : `Lỗi từ khóa tìm kiếm, chỉ cho phép chữ cái và số`
+  keyword_find_user : `Lỗi từ khóa tìm kiếm, chỉ cho phép chữ cái và số`,
+  message_text_emoji_incorrect : "Tin nhắn không hợp lệ , phải có ít nhất 1 ký tự" 
 };
 
 export const transErrors = {
@@ -20,7 +21,8 @@ export const transErrors = {
   server_error : "Co loi tu he thong, vui long thu lai",
   avatar_type : "Kieu file khong hop le, chi chap nhan jpg,jpeg,png" ,
   avatar_size : "Anh upload toi da chi duoc 1MB" ,
-  password_error : `Mat khau khong dung`
+  password_error : `Mat khau khong dung`,
+  conversation_not_found : "Cuốc trò chuyện không tồn tại"
   
 };
 

@@ -32,8 +32,8 @@ function flashMasterNotify(){
     alertify.notify(notify , "success" , 7)
   }
 }
-function enableEmojioneArea(chatId) {
-  $('.write-chat[data-chat="' + chatId + '"]').emojioneArea({
+function enableEmojioneArea(divId) {
+  $(`#write-chat-${divId}`).emojioneArea({
     standalone: false,
     pickerPosition: 'top',
     filtersPosition: 'bottom',
@@ -45,7 +45,10 @@ function enableEmojioneArea(chatId) {
     shortnames: false,
     events: {
       keyup: function(editor, event) {
-        $('.write-chat').val(this.getText());
+        $(`#write-chat-${divId}`).val(this.getText());
+      },
+      click: function(){
+        textAndEmojiChat(divId); 
       }
     },
   });
@@ -162,14 +165,17 @@ function changeTypeChat(){
 
 function changeScreenChat(){
   $(".room-chat").off("click").on("click" , function(){
+    let divId = $(this).find("li").data("chat");
     $(".person").removeClass("active");
-    $(this).find("li").addClass("active");
+  
+    $(`.person[data-chat = ${divId}]`).addClass("active");
     $(this).tab("show");
     
     //cấu hình thanh cuộn bên box chat rightSide.ejs mỗi khi click chuột vào 1 cuộc trỏ chuyện cụ thể
-    let divId = $(this).find("li").data("chat");
+   
     
     nineScrollRight(divId);
+    enableEmojioneArea(divId);
   })
 }
 $(document).ready(function() {
@@ -184,7 +190,7 @@ $(document).ready(function() {
   
 
   // Bật emoji, tham số truyền vào là id của box nhập nội dung tin nhắn
-  enableEmojioneArea("17071995");
+ 
 
   // Icon loading khi chạy ajax
   ajaxLoading();
@@ -209,5 +215,5 @@ $(document).ready(function() {
   //Thay đổi màn hình chat
   changeScreenChat();
   //Tự động click vào phần tử đầu tiên của cuộc trò chuyện khi load lại web
-  $("ul.people").find("li")[0].click();
+  $("ul.people").find("a")[0].click();
 });

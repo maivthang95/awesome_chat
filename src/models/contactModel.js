@@ -191,6 +191,20 @@ contactSchema.statics = {
         ]}
       ]
     }).exec();
+  },
+  updateWhenHasNewMessage(userId , contactId){
+    return this.update({
+      $or : [
+        {$and : [
+          {"userId" : userId} ,
+          {"contactId" : contactId} 
+        ]},
+        {$and: [
+          {"userId" : contactId} ,
+          {"contactId" : userId} 
+        ]}
+      ]
+    }, {"updatedAt" : Date.now()}).exec();
   }
 }
 

@@ -1,5 +1,6 @@
 export const app = {
   avatar_directory : "src/public/images/users" ,
   avatar_type :  ["image/png" , "image/jpg" , "image/jpeg" , "iamge/gif"] ,
-  avatar_limit_Size : 1048576
+  avatar_limit_Size : 1048576 , 
+  general_avatar_chatgroup : "group-avatar-trungquandev.png"
 }
