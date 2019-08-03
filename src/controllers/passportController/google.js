@@ -2,6 +2,7 @@ import passport from "passport" ;
 import passportGoogle from "passport-google-oauth" ;
 import userModel from "./../../models/userModel";
 import {transErrors , transSuccess} from "./../../../lang/vi";
+import chatGroupModel from "./../../models/chatGroupModel";
 
 let googleStrategy = passportGoogle.OAuth2Strategy;
 
@@ -45,10 +46,16 @@ let initPassportGoogle = () => {
     done(null , user._id) ; 
   })
 
-  passport.deserializeUser( (id, done) => {
-    userModel.findUserByIdForSessionToUse(id)
-    .then(user => done(null , user))
-    .catch(err => done(err, null))
+  passport.deserializeUser( async (id, done) => {
+    try {
+      let user = await userModel.findUserByIdForSessionToUse(id);
+      let getChatGroupIds = await chatGroupModel.getChatGroupIdsByUser(id);
+      user = user.toObject() ;
+      user.chatGroupIds = getChatGroupIds ; 
+      return done(null , user);
+    } catch (error) {
+      return done(error , false );
+    }
   })
 }
 

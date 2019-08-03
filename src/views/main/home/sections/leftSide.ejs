@@ -52,7 +52,7 @@
                             <li class="person" data-chat="<%= conversation._id %>"  title="<%= conversation.username %>">
                                 <div class="left-avatar">
                                     <div class="dot"></div>
-                                    <img <% if( conversation.avatar == "avatar-default.jpg" ) {%> src="images/users/default/<%=conversation.avatar%>" <%}else {%> src="images/users/default/<%=conversation.avatar%>" <%}%> alt="">
+                                    <img <% if( conversation.avatar == "avatar-default.jpg" ) {%> src="images/users/default/<%=conversation.avatar%>" <%}else {%> src="images/users/<%=conversation.avatar%>" <%}%> alt="">
                                 </div>
                                 <span class="name" title="<%= conversation.username %>">
                                     <% if (conversation.username.length > 15 ) {%>
