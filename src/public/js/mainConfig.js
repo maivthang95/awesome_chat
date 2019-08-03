@@ -173,10 +173,18 @@ function changeScreenChat(){
     
     //cấu hình thanh cuộn bên box chat rightSide.ejs mỗi khi click chuột vào 1 cuộc trỏ chuyện cụ thể
    
-    
     nineScrollRight(divId);
     enableEmojioneArea(divId);
   })
+}
+
+function convertEmoji(){
+  $(".convert-emoji").each(function() {
+    var original = $(this).html();
+    // use .shortnameToImage if only converting shortnames (for slightly better performance)
+    var converted = emojione.toImage(original);
+    $(this).html(converted);
+});
 }
 $(document).ready(function() {
   // Hide số thông báo trên đầu icon mở modal contact
@@ -214,6 +222,12 @@ $(document).ready(function() {
 
   //Thay đổi màn hình chat
   changeScreenChat();
+
+
+  //Chuyển các unicode thành icon cảm xúc
+  convertEmoji();
+
   //Tự động click vào phần tử đầu tiên của cuộc trò chuyện khi load lại web
   $("ul.people").find("a")[0].click();
-});
+
+})
