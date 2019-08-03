@@ -77,7 +77,7 @@
                       </div>
                   </a>
               </li>
-              <li class="dropdown" id="dropdown-navbar-user" data-uid="user._id">
+              <li class="dropdown" id="dropdown-navbar-user" data-uid="<%= user._id %>">
                   <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                       <img id="navbar-avatar" class="avatar-small" <% if(user.avatar == "avatar-default.jpg") {%> src="/images/users/default/<%= user.avatar %>" <%} else {%>  src="/images/users/<%= user.avatar %>" <%}%> alt="avatar">
                       <span id="navbar-username"><%= user.username %></span>

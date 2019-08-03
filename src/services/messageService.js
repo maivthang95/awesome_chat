@@ -56,8 +56,8 @@ let getAllConversationItems = (currentUserId) => {
       
       
       allConversationsWithMessages = _.sortBy( allConversationsWithMessages , (item) => -item.updatedAt);
-
       
+    
       resolve({
                 allConversationsWithMessages : allConversationsWithMessages
               })
