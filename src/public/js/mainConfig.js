@@ -24,7 +24,7 @@ function nineScrollRight(divId) {
     cursorwidth: '7px',
     scrollspeed: 50
   });
-  $(`.right .chat[data-chat = ${divId}]`).scrollTop($(`.right .chat[data-chat = ${divId}]`)[0].scrollHeight);
+  $(`.right .chat[data-chat = ${divId}]`).attr("tabindex", "0").scrollTop($(`.right .chat[data-chat = ${divId}]`)[0].scrollHeight);
 }
 function flashMasterNotify(){
   let notify = $(".master-success-message").text();
@@ -191,14 +191,15 @@ function changeScreenChat(){
     $(`.person[data-chat = ${divId}]`).addClass("active");
     $(this).tab("show");
     
+    
     //cấu hình thanh cuộn bên box chat rightSide.ejs mỗi khi click chuột vào 1 cuộc trỏ chuyện cụ thể
-   
     nineScrollRight(divId);
     enableEmojioneArea(divId);
+    
     //bật lắng nghe DOM cho việc chat tin nhắn gởi đi
     imageChat(divId);
     attachmentChat(divId);
-    
+    videoChat(divId);
   })
 }
 
@@ -254,4 +255,8 @@ $(document).ready(function() {
   //Tự động click vào phần tử đầu tiên của cuộc trò chuyện khi load lại web
   $("ul.people").find("a")[0].click();
 
+
+  $("#video-chat-group").bind("click" , function(){
+    alertify.notify("Tính năng chưa cập nhật với nhóm trò chuyện , vui lòng thử lại với trò chuyện cá nhân" , "error" , 7) 
+  })
 })

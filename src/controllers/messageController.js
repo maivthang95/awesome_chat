@@ -122,6 +122,7 @@ let addNewAttachment = (req , res) => {
       let isChatGroup = req.body.isChatGroup ;
 
       let newMessage = await message.addNewAttachment(sender ,  receiverId , messageVal , isChatGroup) ;
+      await fsExtra.remove(req.file.path);
       return res.status(200).send({message : newMessage});
     } catch (error) {
       return res.status(500).send(error); 

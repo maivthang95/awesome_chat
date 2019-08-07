@@ -63,12 +63,12 @@ function imageChat(divId){
         $(`.person[data-chat = ${divId}]`).find("span.time").removeClass("message-real-time").html(moment(data.message.createdAt).locale("vi").startOf("seconds").fromNow());
 
         //04 : Move Conversation to top
-        $(`li.person[data-chat=${divId}]`).on("moveConversationImageMessageToTop" , function(){
+        $(`li.person[data-chat=${divId}]`).on("concentrate.moveConversationImageMessageToTop" , function(){
           let dataToMove = $(this).parent();
           $(this).closest("ul").prepend(dataToMove); 
-          $(this).off("moveConversationImageMessageToTop");
+          $(this).off("concentrate.moveConversationImageMessageToTop");
         })
-        $(`li.person[data-chat=${divId}]`).trigger("moveConversationImageMessageToTop");
+        $(`li.person[data-chat=${divId}]`).trigger("concentrate.moveConversationImageMessageToTop");
 
         //05 : resolve realtime
         socket.emit("chat-image" , dataToEmit); 
@@ -118,12 +118,12 @@ $(document).ready(function () {
     $(`.person[data-chat=${divId}]`).find("span.time").html(moment(response.message.createdAt).locale("vi").startOf("seconds").fromNow());
 
     //04
-    $(`li.person[data-chat=${divId}]`).on("moveConversationImageMessageToTop" , function(){
+    $(`li.person[data-chat=${divId}]`).on("concentrate.moveConversationImageMessageToTop" , function(){
       let dataToMove = $(this).parent();
       $(this).closest("ul").prepend(dataToMove); 
-      $(this).off("moveConversationImageMessageToTop");
+      $(this).off("concentrate.moveConversationImageMessageToTop");
     })
-    $(`li.person[data-chat=${divId}]`).trigger("moveConversationImageMessageToTop");
+    $(`li.person[data-chat=${divId}]`).trigger("concentrate.moveConversationImageMessageToTop");
 
     //06 : append to all-images
     if( response.currentUserId !=  $("#dropdown-navbar-user").data("uid")){

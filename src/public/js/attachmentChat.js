@@ -107,7 +107,7 @@ $(document).ready(function () {
       increaseNumberMessageGroup(divId) ; 
       $(`.person[data-chat = ${divId}]`).find("span.time").addClass("message-real-time")
     }else{
-      nineScrollRight();
+      nineScrollRight(divId);
     }
 
     //03: change data preview and time in leftSide
@@ -118,10 +118,12 @@ $(document).ready(function () {
     $(`.person[data-chat = ${divId}]`).on("moveConversationToTop" , function(){
       let dataMove = $(this).parent();
       $(this).closest("ul").prepend(dataMove);
+      $(`.right .chat[data-chat = ${divId}]`).getNiceScroll().onResize();
       $(this).off("moveConversationToTop");
     })
 
     $(`.person[data-chat = ${divId}]`).trigger("moveConversationToTop");
+    
     //05 : append to all-file-attachment modal
     if( response.currentUserId !==  $("#dropdown-navbar-user").data("uid")){
     $(`#attachmentsModal_${divId}`).find("ul.list-attachments").append(`<li>${fileMessage}</li>`);

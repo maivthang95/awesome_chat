@@ -14,42 +14,13 @@ import initSockets from "./sockets/index";
 
 import cookieParser from "cookie-parser";
 import configSocketio from "./config/socketio";
-// pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
-//   if (err) {
-//     throw err
-//   }
-//   let app = express()
-
-//   connectDB();
-
-//   //Config Session
-//   configSession(app);
-
-//   //Enable post data for request
-//   app.use(bodyParser.urlencoded({extended : true }));
-
-//   //Config view engine 
-//   configViewEngine(app) ;
-
-//   //Eanble post data request
-//   app.use(bodyParser.json());
-//   app.use(bodyParser.urlencoded({extended : true }));
-
-//   //enable flash messages
-//   app.use(connectFlash())
-
-//   //Config passport 
-//   app.use(passport.initialize());
-//   app.use(passport.session());
-
-//   //Init all routes
-//   initRoutes(app);
-
-//   https.createServer({ key: keys.serviceKey, cert: keys.certificate }, app).listen(process.env.APP_PORT , process.env.APP_HOST , () => console.log(`Server is running on port ${process.env.APP_PORT} , host : ${process.env.APP_HOST }`));
-// })
-
+import events from "events";
+import * as appConfig from "./config/app";
 //Init app
 let app = express() ;
+
+//Set max connection event listeners
+events.EventEmitter.defaultMaxListeners = appConfig.app.max_event_listener ;
 
 //Init server with socket.io & express app
 let server = http.createServer(app);
