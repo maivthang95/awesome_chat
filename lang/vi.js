@@ -22,8 +22,9 @@ export const transErrors = {
   avatar_type : "Kieu file khong hop le, chi chap nhan jpg,jpeg,png" ,
   avatar_size : "Anh upload toi da chi duoc 1MB" ,
   password_error : `Mat khau khong dung`,
-  conversation_not_found : "Cuốc trò chuyện không tồn tại"
-  
+  conversation_not_found : "Cuốc trò chuyện không tồn tại",
+  image_type : "Kieu file khong hop le, chi chap nhan jpg,jpeg,png" ,
+  image_size : "Anh upload toi da chi duoc 1MB" 
 };
 
 export const transSuccess = {

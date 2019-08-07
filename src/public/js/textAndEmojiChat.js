@@ -98,7 +98,8 @@ $(document).ready(function () {
         divId = response.currentUserId;
         yourMessage.html(convertEmojiMessage) ;
       }
-      
+      console.log($("#dropdown-navbar-user").data("uid"));
+      console.log(response.currentUserId);
     
       //02
       if( response.currentUserId !== $("#dropdown-navbar-user").data("uid")){

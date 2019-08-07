@@ -62,6 +62,7 @@ let initRoutes = (app) => {
   router.get("/contacts/read-more-contacts-received" , auth.checkLoggedIn , contact.readMoreContactsReceived);
  
   router.post("/message/add-new-text-emoji" , auth.checkLoggedIn , messageValid.checkMessageLength , message.addNewTextEmoji);
+  router.post("/message/add-new-image" , auth.checkLoggedIn , message.addNewImage )
   app.use("/" , router )
 }
 
