@@ -1,5 +1,10 @@
 import {validationResult} from "express-validator/check"
-import {message} from "./../services/index"
+import {message} from "./../services/index" ;
+import multer from "multer";
+import {app} from "./../config/app"
+import { transErrors } from "../../lang/vi";
+import fsExtra from "fs-extra";
+import uuidv4 from "uuid/v4";
 let addNewTextEmoji = async (req , res) => {
   let errorArr = []; 
   let validationError = validationResult(req);
@@ -26,7 +31,61 @@ let addNewTextEmoji = async (req , res) => {
     return res.status(500).send(error);
   }
 }
+// =================================================================================== 
 
+let storageImageChat= multer.diskStorage({
+  destination : (req , file ,callback) => {
+    callback(null , app.image_message_directory);
+  },
+  filename : (req , file , callback) => {
+    let match = app.image_type; 
+    if(match.indexOf(file.mimetype) === -1){
+
+      return callback(transErrors.image_type ,null);
+    }
+    let imageName = `${Date.now()}-${file.originalname}`
+    callback(null , imageName);
+  }
+})
+
+
+let imageMessageUploadFile = multer({
+  storage : storageImageChat ,
+  limits : {fileSize : app.avatar_limit_Size}
+}).single("my-image-chat")
+
+let addNewImage = (req , res) => {
+  imageMessageUploadFile( req , res ,async (error )=>{
+    if(error){
+      if(error.message){
+        return res.status(500).send(transErrors.image_size);
+      }
+      return res.status(500).send(error);
+    }
+    try {
+      let sender = {
+        id: req.user._id ,
+        name : req.user.username , 
+        avatar : req.user.avatar 
+      }
+      let receiverId = req.body.uid ; 
+      let messageVal = req.file ;
+      let isChatGroup = req.body.isChatGroup ;
+
+      
+      let newMessage = await message.addNewImage(sender , receiverId , messageVal , isChatGroup); 
+
+      //Remove Image because this image is saved to mongodb
+      await fsExtra.remove(req.file.path);
+
+      return res.status(200).send({message : newMessage})
+    } catch (error) {
+      return res.status(500).send(error);
+    }
+  })
+  
+}
 module.exports = {
-  addNewTextEmoji : addNewTextEmoji
+  addNewTextEmoji : addNewTextEmoji,
+  addNewImage : addNewImage
 }

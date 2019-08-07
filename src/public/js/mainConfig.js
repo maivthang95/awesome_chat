@@ -103,9 +103,13 @@ function configNotification() {
 }
 
 function gridPhotos(layoutNumber) {
-  $(".show-images").unbind("click").on("click" , function(){
+  $(`.show-images`).unbind("click").on("click" , function(event){
+    event.preventDefault();
     let href = $(this).attr("href");
-    let modalImagesId = href.replace("#" , "")
+    let modalImagesId = href.replace("#" , "");
+
+    let originDataImage = $(`#${modalImagesId}`).find(".modal-body").html();
+
     let countRows = Math.ceil($(`#${modalImagesId}`).find('div.all-images>img').length / layoutNumber);
     let layoutStr = new Array(countRows).fill(layoutNumber).join("");
     $(`#${modalImagesId}`).find("div.all-images").photosetGrid({
@@ -115,7 +119,9 @@ function gridPhotos(layoutNumber) {
       layout: layoutStr,
       onComplete: function() {
         $(`#${modalImagesId}`).find(".all-images").css({
-          "visibility": "visible"
+          "visibility": "visible",
+          "max-width" : "100%" ,
+          "height" : "auto"
         });
         $(`#${modalImagesId}`).find(".all-images a").colorbox({
           photo: true,
@@ -123,8 +129,14 @@ function gridPhotos(layoutNumber) {
           maxHeight: "90%",
           maxWidth: "90%"
         });
+        $(`#${modalImagesId}`).find(".all-images img").colorbox({
+          "width" : "100%"
+        });
       }
     });
+    $(`#${modalImagesId}`).on('hidden.bs.modal', function () {
+      $(this).find("div.modal-body").html(originDataImage)
+  })
   })
   
 }
@@ -183,6 +195,9 @@ function changeScreenChat(){
    
     nineScrollRight(divId);
     enableEmojioneArea(divId);
+    //bật lắng nghe DOM cho việc chat tin nhắn gởi đi
+    imageChat(divId);
+    
   })
 }
 

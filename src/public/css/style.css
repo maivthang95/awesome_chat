@@ -838,11 +838,14 @@ label:focus,
   flex-direction: column;
 }
 
-#image-chat,
+.image-chat,
 #attach-chat {
-  display: none;
+  display: none !important;
 }
 
+.label-image-chat{
+  cursor: pointer;
+}
 .room-chat:hover,
 .room-chat:focus {
   text-decoration: none;

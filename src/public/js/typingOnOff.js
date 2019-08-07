@@ -25,16 +25,16 @@ socket.on("response-user-is-typing" , (response) =>{
   </div>`;
   if(response.currentGroupId){
     if(response.currentUserId != $("#dropdown-navbar-user").data("uid")){
-      let check = $(`.chat[data-chat = ${response.currentGroupId}]`).find("div.bubble-typing-gif");
-      if(check.length){
+      let checkTyping = $(`.chat[data-chat = ${response.currentGroupId}]`).find("div.bubble-typing-gif");
+      if(checkTyping.length){
         return false 
       }
       $(`.chat[data-chat = ${response.currentGroupId}]`).append(messageTyping);
       nineScrollRight(response.currentGroupId);
     }
   }else{
-    let check = $(`.chat[data-chat = ${response.currentUserId}]`).find("div.bubble-typing-gif");
-    if(check.length){
+    let checkTyping = $(`.chat[data-chat = ${response.currentUserId}]`).find("div.bubble-typing-gif");
+    if(checkTyping.length){
       return false 
     }
     $(`.chat[data-chat = ${response.currentUserId}]`).append(messageTyping);

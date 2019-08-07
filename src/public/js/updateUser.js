@@ -36,17 +36,17 @@ function updateUserInfo(){
     let match = ["image/png" , "image/jpg" , "image/jpeg"] ; 
     let limit = 1048576 ; //1 MG = .. bytes 
 
-    // if($.inArray(fileData.type , math) === -1 ) {
-    //   alertify.notify("Kieu file khong hop le, chi chap nhan jpg,jpeg,png" ,"error" , 7);
-    //   $(this).val(null);
-    //   return false ;
-    // }
+    if($.inArray(fileData.type , match) === -1 ) {
+      alertify.notify("Kieu file khong hop le, chi chap nhan jpg,jpeg,png" ,"error" , 7);
+      $(this).val(null);
+      return false ;
+    }
 
-    // if(fileData.size > limit){
-    //   alertify.notify("Anh upload toi da chi duoc 1MB " , "error" , 7);
-    //   $(this).val(null) ;
-    //   return false ;
-    // }
+    if(fileData.size > limit){
+      alertify.notify("Anh upload toi da chi duoc 1MB " , "error" , 7);
+      $(this).val(null) ;
+      return false ;
+    }
 
     if(typeof (FileReader) != "undefined"){
       let imagePreview = $("#image-edit-profile");
