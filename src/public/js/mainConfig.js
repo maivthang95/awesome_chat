@@ -197,6 +197,7 @@ function changeScreenChat(){
     enableEmojioneArea(divId);
     //bật lắng nghe DOM cho việc chat tin nhắn gởi đi
     imageChat(divId);
+    attachmentChat(divId);
     
   })
 }
