@@ -6,4 +6,6 @@ export const app = {
   image_message_directory : "src/public/images/chat/messages",
   image_type :  ["image/png" , "image/jpg" , "image/jpeg" , "iamge/gif"] ,
   image_limit_Size : 1048576 , 
+  attachment_directory : "src/public/images/chat/attachments" ,
+  attachment_limit_Size :1048576 
 }

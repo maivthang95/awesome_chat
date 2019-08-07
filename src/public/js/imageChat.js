@@ -1,6 +1,5 @@
 function BufferToBase64(buffer){
-  return btoa(
-    new Uint8Array(buffer).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+  return btoa( new Uint8Array(buffer).reduce((data, byte) => data + String.fromCharCode(byte), ''));
 }
 
 function imageChat(divId){
@@ -38,7 +37,6 @@ function imageChat(divId){
       processData : false , 
       data : messageFormData , 
       success : function(data){
-        console.log(data);
         let dataToEmit = {
           message : data.message
         }
