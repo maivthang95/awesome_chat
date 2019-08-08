@@ -205,6 +205,20 @@ contactSchema.statics = {
         ]}
       ]
     }, {"updatedAt" : Date.now()}).exec();
+  },
+  getContactsList(userId){
+    return this.find({
+     $or : [
+       {$and : [
+         {"userId" : userId} ,
+         {"status" : true } 
+       ]},
+       {$and : [
+         {"contactId" : userId} , 
+         {"status" : true }
+       ]}
+     ]
+    }).exec();
   }
 }
 

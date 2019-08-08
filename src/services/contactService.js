@@ -239,6 +239,26 @@ let removeContact = (currentUserId , contactId) => {
     }
   })
 }
+
+let seachFriends = (userId , keyword ) => {
+  return new Promise ( async(resolve , reject ) => {
+    try { 
+      let friendsList = [] ; 
+      let contactsList = await contactModel.getContactsList(userId) ;
+      contactsList.forEach( async contact => {
+        friendsList.push(contact.userId) ;
+        friendsList.push(contact.contactId)
+      })
+      
+      friendsList = _.uniqBy(friendsList);
+      friendsList = friendsList.filter( friendId => friendId != userId) ;
+      let searchFriends = await userModel.seachFriends(friendsList , keyword) ;
+      resolve(searchFriends);
+    } catch (error) {
+      reject(error) ; 
+    }
+  })
+}
 module.exports = {
   findUserContact : findUserContact,
   addNew : addNew ,
@@ -254,5 +274,6 @@ module.exports = {
   readMoreContactsSent : readMoreContactsSent,
   readMoreContactsReceived : readMoreContactsReceived,
   approveRequestContactReceived : approveRequestContactReceived,
-  removeContact : removeContact
+  removeContact : removeContact ,
+  seachFriends : seachFriends
 }

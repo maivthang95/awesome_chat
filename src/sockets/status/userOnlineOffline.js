@@ -9,9 +9,9 @@ let userOnlineOffline = (io) => {
     socket.request.user.chatGroupIds.forEach( group => {
       clients = pushSocketIdToArray( clients , group._id , socket.id);
     })
-
+    
     let listUsersOnline = Object.keys(clients);
-    console.log(listUsersOnline);
+    
     //Step01 : Emit to user after login or f5
     socket.emit("server-send-list-users-online" , listUsersOnline );
 

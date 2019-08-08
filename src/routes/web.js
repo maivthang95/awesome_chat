@@ -53,7 +53,7 @@ let initRoutes = (app) => {
   router.delete("/contact/remove-request-contact-sent" , auth.checkLoggedIn , contact.removeRequestContactSent);
   router.delete("/contact/remove-request-contact-received" , auth.checkLoggedIn , contact.removeRequestContactReceived);
   router.put("/contact/approve-request-contact-received" , auth.checkLoggedIn , contact.approveRequestContactReceived);
-  
+  router.get("/contact/search-friends/:keyword" , auth.checkLoggedIn , contactValid.searchFriends, contact.searchFriends )
   
   router.get("/notification/read-more" , auth.checkLoggedIn , notification.readMore );
   router.put("/notification/mark-all-as-read" , auth.checkLoggedIn , notification.markAllAsRead);

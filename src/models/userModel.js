@@ -93,6 +93,23 @@ userSchema.statics = {
   },
   getNormalUserDataById(id){
     return this.findById(id , { username : 1 , avatar : 1 , address : 1 , _id : 1 }).exec();
+  },
+  findAllFriendsById(id){
+    return this.findById(id , {"local.password" : 0}).exec();
+  },
+  seachFriends( listId , keyword){
+    return this.find({
+      $and : [
+        {"_id" : {$in : listId}} ,
+        {"local.isActive" : true } , 
+        {$or : [
+          {"username" : {"$regex" : new RegExp (keyword , "i")}} ,
+          {"local.email" : {"$regex" : new RegExp(keyword , "i")}} , 
+          {"facebook.email" : {"$regex" : new RegExp (keyword , "i")}} , 
+          {"google.email" : {"$regex" : new RegExp(keyword , "i")}}
+        ]}
+      ]
+    }, {username : 1 , _id : 1 , address : 1 , avatar : 1 }).exec();
   }
 };
 
