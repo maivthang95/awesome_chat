@@ -8,6 +8,14 @@ let findUserContact = [
 
 ]
 
+let searchFriends = [
+  check("keyword" , transValidation.keyword_find_user)
+  .isLength({min: 1 , max : 20})
+  .matches(/^[\s0-9a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$/)
+
+]
+
 module.exports = {
-  findUserContact : findUserContact 
+  findUserContact : findUserContact ,
+  searchFriends : searchFriends
 }
