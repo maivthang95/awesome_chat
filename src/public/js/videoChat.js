@@ -27,18 +27,26 @@ function closeVideoStream(stream){
     track.stop();
   })
 }
+
+
 $(document).ready(function () {
+
   //step02 : 
   socket.on("server-send-listener-offline" , () => {
     alertify.notify("Người dùng hiện không trực tuyến" , "error" , 7);
   })
+
+  let iceServerList = $("#ice-servers-list").val();
+  iceServerList = JSON.parse(iceServerList);
+  
   let getPeerId = "" ; 
   const peer = new Peer({
     key : "peerjs" , 
     host : "peerjs-server-trungquandev.herokuapp.com", 
     secure : true , 
     port : 443 , 
-    debug : 0
+    debug : 0 ,
+    config : { 'iceServers': iceServerList}
   }); 
  
   peer.on("open" , function(peerId){
