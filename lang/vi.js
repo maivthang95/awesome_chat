@@ -8,7 +8,9 @@ export const transValidation = {
   update_address : "Dia chi khong hop le", 
   update_phone : "So dien thoai bat dau bang 0 va gioi han trong khoang 10 den 11 ky tu", 
   keyword_find_user : `Lỗi từ khóa tìm kiếm, chỉ cho phép chữ cái và số`,
-  message_text_emoji_incorrect : "Tin nhắn không hợp lệ , phải có ít nhất 1 ký tự" 
+  message_text_emoji_incorrect : "Tin nhắn không hợp lệ , phải có ít nhất 1 ký tự" ,
+  add_new_group_users_incorrect : "để tạo nhóm ít nhất cần có 3 thành viên" , 
+  add_new_group_name_incorrect : "Tên nhóm không chứa ký tự đặc biệt và có độ dài từ 3 đến 5 ký tự"
 };
 
 export const transErrors = {

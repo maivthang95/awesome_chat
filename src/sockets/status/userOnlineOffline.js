@@ -10,13 +10,26 @@ let userOnlineOffline = (io) => {
       clients = pushSocketIdToArray( clients , group._id , socket.id);
     })
     
-    let listUsersOnline = Object.keys(clients);
-    
-    //Step01 : Emit to user after login or f5
-    socket.emit("server-send-list-users-online" , listUsersOnline );
+    socket.on("create-new-group" , (data) =>{
+      clients = pushSocketIdToArray( clients , data.groupChat._id , socket.id);
+    })
 
-    //Step02: Emit to all another user when has new user online
-    socket.broadcast.emit("server-send-user-just-online" , socket.request.user._id );
+    socket.on("member-received-group-chat" , data => {
+      clients = pushSocketIdToArray( clients , data.groupChatId , socket.id);
+    })
+    
+    //Step00 : 
+    socket.on("check-status" , () => {
+      let listUsersOnline = Object.keys(clients);
+
+      //Step01 : Emit to user after login or f5
+      socket.emit("server-send-list-users-online" , listUsersOnline );
+
+      //Step02: Emit to all another user when has new user online
+      socket.broadcast.emit("server-send-user-just-online" , socket.request.user._id );
+    })
+
+    
 
     socket.on("disconnect" , ()=>{
       //remove socket.id when socket disconnect

@@ -3,7 +3,7 @@ import {pushSocketIdToArray ,emitNotifyToArray,removeSocketIdFromArray} from "./
  * 
  * @param io from socket.io lib
  */
-let typingOn = (io) => {
+let newGroupChat = (io) => {
   let clients = {} ; 
   io.on("connection" , (socket) => {
     let currentUserId = socket.request.user._id ;
@@ -14,30 +14,17 @@ let typingOn = (io) => {
       clients = pushSocketIdToArray( clients , group._id , socket.id);
     })
 
-    socket.on("user-is-typing" , (data) =>{
-        if(data.groupId){
-          let response = {
-            currentUserId : socket.request.user._id ,
-            currentGroupId : data.groupId
-          }
-         
-          if(clients[data.groupId]){
-            emitNotifyToArray(clients , data.groupId , io ,"response-user-is-typing" , response)
-          }
-        }
-        if(data.contactId){
-            let response = {
-                currentUserId : socket.request.user._id 
-            }
-            if(clients[data.contactId]){
-              emitNotifyToArray(clients , data.contactId , io ,"response-user-is-typing" , response)
-            }
-        }
-     
-    })
-
     socket.on("create-new-group" , (data) =>{
       clients = pushSocketIdToArray( clients , data.groupChat._id , socket.id);
+      
+      let response = {
+        groupChat : data.groupChat
+      }
+      data.groupChat.members.forEach( member => {
+        if(clients[member.userId] && member.userId != socket.request.user._id){
+          emitNotifyToArray(clients, member.userId , io , "response-create-new-group" , response);
+        }
+      })
     })
 
     socket.on("member-received-group-chat" , data => {
@@ -55,4 +42,4 @@ let typingOn = (io) => {
   })
 }
 
-module.exports = typingOn;
+module.exports = newGroupChat;
