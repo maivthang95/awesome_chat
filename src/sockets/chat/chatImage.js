@@ -37,6 +37,14 @@ let chatImage = (io) => {
         }
      
     })
+    
+    socket.on("create-new-group" , (data) =>{
+      clients = pushSocketIdToArray( clients , data.groupChat._id , socket.id);
+    })
+
+    socket.on("member-received-group-chat" , data => {
+      clients = pushSocketIdToArray( clients , data.groupChatId , socket.id);
+    })
 
     socket.on("disconnect" , ()=>{
       //remove socket.id when socket disconnect
