@@ -137,7 +137,7 @@ contactSchema.statics = {
         ]},
         {"status" : true }
       ]
-    }).sort({"createdAt" : -1}).skip(skipNumber).limit(limit).exec();
+    }).sort({"updatedAt" : -1}).skip(skipNumber).limit(limit).exec();
   },
   readMoreContactsSent(userId , skipNumber , limit){
     return this.find({
