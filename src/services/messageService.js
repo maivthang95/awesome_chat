@@ -6,7 +6,7 @@ import {transErrors} from "./../../lang/vi";
 import {app} from "./../config/app"
 import _ from "lodash";
 import fsExtra from "fs-extra";
-const LIMIT_CONVERSATION = 15;
+const LIMIT_CONVERSATION = 2;
 const LIMIT_MESSAGES = 30;
 /**
  * get all conversation
@@ -299,12 +299,72 @@ let addNewAttachment = (sender , receiverId , messageVal , isGroupChat) => {
       reject(error);
     }
   })
+};
+/**
+ * read more personal and group chat
+ * @param {string} currentUserId 
+ * @param {number} skipPersonal 
+ * @param {number} skipGroup 
+ */
+let readMoreAllChats = (currentUserId , skipPersonal ,  skipGroup ) => {
+  return new Promise (async (resolve , reject ) => {
+    try {
+      let contacts = await contactModel.readMoreContacts(currentUserId ,skipPersonal , LIMIT_CONVERSATION);
+      
+      let usersConversationPromise = contacts.map( async ( contact ) => {
+        if(contact.contactId == currentUserId){
+          let user = await userModel.getNormalUserDataById(contact.userId);
+          
+          user.updatedAt = contact.updatedAt ; 
+          return user;
+        }else{
+          let user= await userModel.getNormalUserDataById(contact.contactId) ;
+           
+          user.updatedAt = contact.updatedAt ;
+          return user;
+        }
+      })
+      let usersConversation = await Promise.all(usersConversationPromise);
+      
+      let groupConversations = await chatGroupModel.readMoreChatsGroup(currentUserId , skipGroup, LIMIT_CONVERSATION) ; 
+      let allConversations = usersConversation.concat(groupConversations);
+      
+      allConversations = _.sortBy(allConversations , (item) => -item.updatedAt)
+      
+      
+      //get messages to apply in screen chat
+      let allConversationsWithMessagesPromise = allConversations.map(async  (conversation) => {
+        conversation = conversation.toObject();
+        
+        if(conversation.members){
+          let getMessages = await messageModel.model.getMessagesInGroup(conversation._id , LIMIT_MESSAGES);
+          conversation.messages = _.reverse(getMessages); 
+          return conversation ; 
+        }else{
+          let getMessages = await messageModel.model.getMessagesInPersonal(currentUserId , conversation._id , LIMIT_MESSAGES);
+          conversation.messages = _.reverse(getMessages); 
+          return conversation ; 
+        }
+        
+      })
+      
+      let allConversationsWithMessages = await Promise.all(allConversationsWithMessagesPromise);
+      
+      
+      allConversationsWithMessages = _.sortBy( allConversationsWithMessages , (item) => -item.updatedAt);
+      
+    
+      resolve(allConversationsWithMessages );
+     
+    } catch (error) {
+      reject(error);
+    }
+  })
 }
-
-
 module.exports = {
   getAllConversationItems: getAllConversationItems, 
   addNewTextEmoji : addNewTextEmoji,
   addNewImage : addNewImage,
-  addNewAttachment : addNewAttachment
+  addNewAttachment : addNewAttachment,
+  readMoreAllChats : readMoreAllChats
 }
