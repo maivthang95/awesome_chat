@@ -64,7 +64,8 @@ let initRoutes = (app) => {
   router.post("/message/add-new-text-emoji" , auth.checkLoggedIn , messageValid.checkMessageLength , message.addNewTextEmoji);
   router.post("/message/add-new-image" , auth.checkLoggedIn , message.addNewImage );
   router.post("/message/add-new-attachment" , auth.checkLoggedIn , message.addNewAttachment);
-  router.get("/messages/read-more-all-chat" , auth.checkLoggedIn , message.readMoreAllChats) 
+  router.get("/messages/read-more-all-chat" , auth.checkLoggedIn , message.readMoreAllChats) ;
+  router.get("/message/read-more-messages" , auth.checkLoggedIn , message.readMoreMessages) ;
 
   router.post("/group-chat/add-new" , auth.checkLoggedIn ,groupChatValid.addNewGroupChat ,  groupChat.addNewGroupChat)
   app.use("/" , router )

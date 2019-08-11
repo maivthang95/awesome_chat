@@ -163,9 +163,41 @@ let readMoreAllChats = async (req , res) => {
     return res.status(500).send(error);
   }
 }
+
+let readMoreMessages = async (req , res ) => {
+  try {
+    let currentUserId = req.user._id ; 
+    let targetId = req.query.targetId ;
+    let skipMessages = +req.query.skipMessages ;
+    let chatInGroup = (req.query.chatInGroup === "true") ;
+    let newMessages = await message.readMoreMessages(currentUserId , targetId , skipMessages , chatInGroup);
+    
+
+    let dataToRender = {
+      newMessages : newMessages , 
+      bufferToBase64 : bufferToBase64 ,
+      user : req.user 
+    }
+    console.log(newMessages);
+    let rightSideData = await renderFile("src/views/main/readMoreMessages/_rightSide.ejs" , dataToRender) ;
+    let imageModalData = await renderFile("src/views/main/readMoreMessages/_imageModal.ejs" , dataToRender) ;
+    let attachmentModalData = await renderFile("src/views/main/readMoreMessages/_attachmentModal.ejs" , dataToRender);
+   
+    
+    return res.status(200).send({
+      rightSideData : rightSideData , 
+      imageModalData : imageModalData , 
+      attachmentModalData : attachmentModalData
+    })
+    //return res.status(200).send({});
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+}
 module.exports = {
   addNewTextEmoji : addNewTextEmoji,
   addNewImage : addNewImage ,
   addNewAttachment : addNewAttachment, 
-  readMoreAllChats : readMoreAllChats
+  readMoreAllChats : readMoreAllChats ,
+  readMoreMessages : readMoreMessages
 }
