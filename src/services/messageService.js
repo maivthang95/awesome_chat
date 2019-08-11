@@ -6,8 +6,8 @@ import {transErrors} from "./../../lang/vi";
 import {app} from "./../config/app"
 import _ from "lodash";
 import fsExtra from "fs-extra";
-const LIMIT_CONVERSATION = 2;
-const LIMIT_MESSAGES = 30;
+const LIMIT_CONVERSATION = 10;
+const LIMIT_MESSAGES = 20;
 /**
  * get all conversation
  * @param {string} currentUserId 
@@ -361,10 +361,35 @@ let readMoreAllChats = (currentUserId , skipPersonal ,  skipGroup ) => {
     }
   })
 }
+/**
+ * 
+ * @param {string} currentUserId 
+ * @param {string} targetId 
+ * @param {number} skipMessages 
+ * @param {boolean} chatInGroup 
+ */
+let readMoreMessages =  (currentUserId , targetId , skipMessages , chatInGroup) => {
+ return new Promise ( async (resolve , reject ) => {
+  try {
+    if(chatInGroup){
+      let getMessages = await messageModel.model.readMoreMessagesInGroup( targetId, skipMessages, LIMIT_MESSAGES);
+      getMessages = _.reverse(getMessages); 
+      
+      return resolve(getMessages) ;
+    }
+      let getMessages = await messageModel.model.readMoreMessagesInPersonal(currentUserId , targetId , skipMessages , LIMIT_MESSAGES);
+      getMessages = _.reverse(getMessages); 
+      return resolve(getMessages)
+   } catch (error) {
+     reject(error);
+   }
+ })
+}
 module.exports = {
   getAllConversationItems: getAllConversationItems, 
   addNewTextEmoji : addNewTextEmoji,
   addNewImage : addNewImage,
   addNewAttachment : addNewAttachment,
-  readMoreAllChats : readMoreAllChats
+  readMoreAllChats : readMoreAllChats,
+  readMoreMessages : readMoreMessages
 }
