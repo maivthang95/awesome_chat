@@ -1,0 +1,91 @@
+<div class="modal fade" id="groupChatModalAtRightSide_<%= group._id %>" class="show-members-in-group">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><strong><%- group.name %></strong></h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-7 col-sm-12" class="find-user-in-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Tìm kiếm thành viên trong nhóm">
+                            <div class="input-group-btn">
+                                <button type="button" id="btn-search-members-in-group" class="btn btn-primary">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                  </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <div class="row" style="margin-top:10px">
+                        <div id="list-members">
+                            <div class="membersList row" style="margin-top:5px">
+                                <% members.forEach ( ( member , index ) => { %>
+                                    <% if(index == 0 ) {%>
+                                        <div data-uid="<%= member._id %>" class="col-md-4 col-sm-12">
+                                            <div class="groupPanel text-center">
+                                                <div class="member-avatar">
+                                                    <img src="images/users/<%= member.avatar %>" />
+                                                </div>
+                                                <div class="member-name">
+                                                    <p>
+                                                        <%= member.username %>
+                                                    </p>
+                                                </div>
+                                                <div class="text-center">
+                                                    <div class="btn-leave-group btn" data-uid="<%= member._id %>">
+                                                        Rời khỏi nhóm
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% } else { %>
+                                            <div data-uid="<%= member._id %>" class="col-md-4 col-sm-12">
+                                                <div class="groupPanel text-center">
+                                                    <div class="member-avatar">
+                                                        <img src="images/users/<%= member.avatar %>" />
+                                                    </div>
+                                                    <div class="member-name">
+                                                        <p>
+                                                            <%= member.username %>
+                                                        </p>
+                                                    </div>
+                                                    <div class="row">
+                                                        <% if(member.isFriend === false ) { %>
+                                                            <div class="col-sm-6 col-sm-push-1">
+                                                                <div class="member-request-contact-sent" data-uid="<%= member._id %>">
+                                                                    Kết bạn
+                                                                </div>
+                                                                <div class="member-cancel-contact-sent" data-uid="<%= member._id %>">
+                                                                    Hủy kết bạn
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6 col-sm-pull-1 ">
+                                                                <div class="member-talk" data-uid="<%= member._id %>">
+                                                                    Nhắn tin
+                                                                </div>
+                                                            </div>
+                                                            <%}else {%>
+                                                                <div class="col-sm-6 col-sm-push-3">
+                                                                    <div class="member-talk" data-uid="<%= member._id %>">
+                                                                        Nhắn tin
+                                                                    </div>
+                                                                </div>
+                                                                <%}%>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <%}%>
+                                                <%})%>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

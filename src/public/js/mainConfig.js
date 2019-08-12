@@ -60,6 +60,9 @@ function enableEmojioneArea(divId) {
       },
       keypress : function(){
         typingOn(divId);
+      },
+      focus:  function(){
+        textAndEmojiChat(divId); 
       }
     },
   });
@@ -68,6 +71,7 @@ function enableEmojioneArea(divId) {
     $('.emojionearea-button').click();
     $('.emojionearea-editor').focus();
   });
+  $(`.emojionearea-editor`).focus();
 }
 
 function spinLoaded() {
@@ -90,18 +94,22 @@ function ajaxLoading() {
 
 function showModalContacts() {
   $('#show-modal-contacts').click(function() {
-    $(this).find('.noti_contact_counter').fadeOut('slow');
+    $(this).find(".noti_contact_counter").fadeOut("slow");
   });
 }
 
 function configNotification() {
-  $('#noti_Button').click(function() {
-    $('#notifications').fadeToggle('fast', 'linear');
-    $('.noti_counter').fadeOut('slow');
+  $("#noti_Button").click(function() {
+    $("#notifications").fadeToggle("fast", "linear");
+    $(".noti_counter").fadeOut("slow");
     return false;
   });
+  $(".searchBox").click(function() {
+    $("#search-results").fadeIn("slow" , "linear");
+  })
   $(".main-content").click(function() {
-    $('#notifications').fadeOut('fast', 'linear');
+    $("#notifications").fadeOut("fast", "linear");
+    $("#search-results").fadeOut("slow" , "linear");
   });
 }
 
@@ -156,6 +164,8 @@ function changeTypeChat(){
   })
 }
 
+
+
 function changeScreenChat(){
   $(".room-chat").off("click").on("click" , function(){
     let divId = $(this).find("li").data("chat");
@@ -183,6 +193,24 @@ function convertEmoji(){
     var converted = emojione.toImage(original);
     $(this).html(converted);
 });
+}
+
+function screenUserNotContact(){
+  if(!$(`ul.people`).find("a").length){
+    Swal.fire({
+      type : "info" ,
+      title : `Hiện tại bạn vẫn chưa có danh sách liên lạc, tìm kiếm cho mình bạn bè`, 
+      confirmButtonColor : "#2ecc71" , 
+      confirmButtonText : "Đi dến",
+      showCancelButton : true,
+      cancelButtonColor : "#ff7675" , 
+      cancelButtonText : "Để sau" 
+    }).then( (result) => {
+      if(result.value){
+        $("#contactsModal").modal("show");
+      }
+    })
+  }
 }
 $(document).ready(function() {
   // Hide số thông báo trên đầu icon mở modal contact
@@ -221,10 +249,15 @@ $(document).ready(function() {
   convertEmoji();
 
   //Tự động click vào phần tử đầu tiên của cuộc trò chuyện khi load lại web
-  $("ul.people").find("a")[0].click();
+  if( $("ul.people").find("a").length){
+    $("ul.people").find("a")[0].click();
+    
+  }
 
-
+  
+  screenUserNotContact();
   $("#video-chat-group").bind("click" , function(){
     alertify.notify("Tính năng chưa cập nhật với nhóm trò chuyện , vui lòng thử lại với trò chuyện cá nhân" , "error" , 7) 
   })
 })
+

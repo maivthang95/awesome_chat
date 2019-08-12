@@ -140,7 +140,8 @@ let readMoreAllChats = async (req , res) => {
   try {
     let skipPersonal = +req.query.skipPersonal ; 
     let skipGroup = +req.query.skipGroup ;
-    let newAllConversations = await message.readMoreAllChats(req.user._id , skipPersonal , skipGroup);
+    let exceptId = req.query.exceptId;
+    let newAllConversations = await message.readMoreAllChats(req.user._id , skipPersonal , exceptId, skipGroup);
     let dataToRender = {
       newAllConversations : newAllConversations , 
       bufferToBase64 : bufferToBase64 ,
@@ -178,7 +179,7 @@ let readMoreMessages = async (req , res ) => {
       bufferToBase64 : bufferToBase64 ,
       user : req.user 
     }
-    console.log(newMessages);
+  
     let rightSideData = await renderFile("src/views/main/readMoreMessages/_rightSide.ejs" , dataToRender) ;
     let imageModalData = await renderFile("src/views/main/readMoreMessages/_imageModal.ejs" , dataToRender) ;
     let attachmentModalData = await renderFile("src/views/main/readMoreMessages/_attachmentModal.ejs" , dataToRender);
@@ -194,10 +195,106 @@ let readMoreMessages = async (req , res ) => {
     return res.status(500).send(error);
   }
 }
+
+let readMorePersonalChat = async (req , res) => {
+  try {
+    let skipPersonal = +req.query.skipPersonal ; 
+    let exceptId = req.query.exceptId; 
+    let newMessages = await message.readMorePersonalChat(req.user._id , skipPersonal,exceptId ) ;
+    
+    let dataToRender = {
+      newMessages : newMessages , 
+      bufferToBase64 : bufferToBase64 , 
+      lastItemOfArray : lastItemOfArray,
+      convertTimeStampToHumanTime : convertTimeStampToHumanTime ,
+      user : req.user  ,
+    }
+
+    let leftSidePersonalData = await renderFile("src/views/main/readMoreConversations/_leftSidePersonalChat.ejs" , dataToRender);
+    let rightSidePersonalData = await renderFile("src/views/main/readMoreConversations/_rightSidePersonalChat.ejs" , dataToRender) ;
+    let imagePersonalModalData = await renderFile("src/views/main/readMoreConversations/_imageModalPersonal.ejs" , dataToRender);
+    let attachmentPersonalModalData = await renderFile("src/views/main/readMoreConversations/_attachmentModalPersonal.ejs" , dataToRender) ;
+    
+    return res.status(200).send({
+      leftSidePersonalData : leftSidePersonalData , 
+      rightSidePersonalData : rightSidePersonalData ,
+      imagePersonalModalData : imagePersonalModalData ,
+      attachmentModalData : attachmentPersonalModalData
+    })
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+}
+
+let readMoreGroupChat = async (req ,  res) => {
+  try {
+    let skipGroup = +req.query.skipGroup ; 
+    let newMessages = await message.readMoreGroupChat(req.user._id , skipGroup) ;
+    
+    let dataToRender = {
+      newMessages : newMessages ,
+      bufferToBase64 : bufferToBase64 ,
+      lastItemOfArray : lastItemOfArray ,
+      convertTimeStampToHumanTime : convertTimeStampToHumanTime , 
+      user : req.user
+    }
+    
+    let leftSideGroupData = await renderFile("src/views/main/readMoreConversations/_leftSideGroupChat.ejs" , dataToRender);
+    let rightSideGroupData = await renderFile("src/views/main/readMoreConversations/_rightSideGroupChat.ejs" , dataToRender) ;
+   
+    let imageGroupModalData = await renderFile("src/views/main/readMoreConversations/_imageModalGroup.ejs" , dataToRender);
+    let attachmentGroupModalData = await renderFile("src/views/main/readMoreConversations/_attachmentModalGroup.ejs" , dataToRender) ;
+    return res.status(200).send({
+      leftSideGroupData : leftSideGroupData , 
+      rightSideGroupData : rightSideGroupData , 
+      imageGroupModalData : imageGroupModalData , 
+      attachmentGroupModalData : attachmentGroupModalData
+    })
+  } catch (error) {
+    return res.status(500).send(error) ;
+  }
+}
+
+let chatWithFriendFromContactList = async (req , res ) => {
+  try {
+    let targetId = req.query.targetId;
+    
+    let newMessage = await message.chatWithFriendFromContactList(req.user._id ,targetId) ; 
+    let newMessages = [] ; 
+    newMessages.push(newMessage);
+    
+    let dataToRender = {
+      newMessages : newMessages , 
+      bufferToBase64 : bufferToBase64 , 
+      lastItemOfArray : lastItemOfArray,
+      convertTimeStampToHumanTime : convertTimeStampToHumanTime ,
+      user : req.user  ,
+    }
+
+    let leftSidePersonalData = await renderFile("src/views/main/readMoreConversations/_leftSidePersonalChat.ejs" , dataToRender);
+    let rightSidePersonalData = await renderFile("src/views/main/readMoreConversations/_rightSidePersonalChat.ejs" , dataToRender) ;
+    let imagePersonalModalData = await renderFile("src/views/main/readMoreConversations/_imageModalPersonal.ejs" , dataToRender);
+    let attachmentPersonalModalData = await renderFile("src/views/main/readMoreConversations/_attachmentModalPersonal.ejs" , dataToRender) ;
+    
+    return res.status(200).send({
+      leftSidePersonalData : leftSidePersonalData , 
+      rightSidePersonalData : rightSidePersonalData ,
+      imagePersonalModalData : imagePersonalModalData ,
+      attachmentModalData : attachmentPersonalModalData
+    })
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+}
+
+
 module.exports = {
   addNewTextEmoji : addNewTextEmoji,
   addNewImage : addNewImage ,
   addNewAttachment : addNewAttachment, 
   readMoreAllChats : readMoreAllChats ,
-  readMoreMessages : readMoreMessages
+  readMoreMessages : readMoreMessages , 
+  readMorePersonalChat : readMorePersonalChat ,
+  readMoreGroupChat : readMoreGroupChat,
+  chatWithFriendFromContactList : chatWithFriendFromContactList,
 }

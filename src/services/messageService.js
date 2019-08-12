@@ -6,7 +6,7 @@ import {transErrors} from "./../../lang/vi";
 import {app} from "./../config/app"
 import _ from "lodash";
 import fsExtra from "fs-extra";
-const LIMIT_CONVERSATION = 10;
+const LIMIT_CONVERSATION = 4;
 const LIMIT_MESSAGES = 20;
 /**
  * get all conversation
@@ -306,10 +306,10 @@ let addNewAttachment = (sender , receiverId , messageVal , isGroupChat) => {
  * @param {number} skipPersonal 
  * @param {number} skipGroup 
  */
-let readMoreAllChats = (currentUserId , skipPersonal ,  skipGroup ) => {
+let readMoreAllChats = (currentUserId , skipPersonal , exceptId ,  skipGroup ) => {
   return new Promise (async (resolve , reject ) => {
     try {
-      let contacts = await contactModel.readMoreContacts(currentUserId ,skipPersonal , LIMIT_CONVERSATION);
+      let contacts = await contactModel.readMoreContactHasException(currentUserId ,skipPersonal  ,exceptId, LIMIT_CONVERSATION);
       
       let usersConversationPromise = contacts.map( async ( contact ) => {
         if(contact.contactId == currentUserId){
@@ -385,11 +385,83 @@ let readMoreMessages =  (currentUserId , targetId , skipMessages , chatInGroup) 
    }
  })
 }
+
+let readMorePersonalChat = (currentUserId , skipPersonal , exceptId ) => {
+  return new Promise ( async (resolve , reject) => {
+    try {
+      let contacts = await contactModel.readMoreContactHasException(currentUserId , skipPersonal , exceptId , LIMIT_CONVERSATION);
+      let usersConversationPromise = contacts.map( contact => {
+        if(contact.userId == currentUserId){
+          return userModel.getNormalUserDataById(contact.contactId) ; 
+        }
+        return userModel.getNormalUserDataById(contact.userId) ;
+      })
+
+      let usersConversation = await Promise.all(usersConversationPromise);
+        
+      // push messages to user
+      let usersConversationWithMessagesPromise = usersConversation.map(async conversation =>{
+        conversation = conversation.toObject() ; 
+        let getMessages = await messageModel.model.getMessagesInPersonal(currentUserId , conversation._id , LIMIT_MESSAGES);
+        conversation.messages = _.reverse(getMessages); 
+        return conversation ; 
+      })
+
+     let usersConversationWithMessages = await Promise.all(usersConversationWithMessagesPromise);
+     resolve(usersConversationWithMessages);
+    } catch (error) {
+      reject(error);
+    }
+  })
+}
+
+let readMoreGroupChat = (currentUserId , skipGroup ) => {
+  return new Promise (async (resolve , reject) => {
+    try {
+      let groupConversation = await chatGroupModel.readMoreChatsGroup(currentUserId , skipGroup , LIMIT_CONVERSATION);
+      
+      let groupConversationWithMessagesPromise = groupConversation.map( async conversation => {
+        conversation = conversation.toObject() ; 
+        let getMessages = await messageModel.model.getMessagesInGroup(conversation._id , LIMIT_MESSAGES); 
+        conversation.messages = _.reverse(getMessages);
+        return conversation ;
+      })
+
+      let groupConversationWithMessages = await Promise.all(groupConversationWithMessagesPromise);
+      
+      resolve(groupConversationWithMessages);
+    } catch (error) {
+      reject(error);
+    }
+  })
+}
+
+let chatWithFriendFromContactList = (currentUserId ,  contactId ) => {
+  return new Promise ( async (resolve , reject ) => {
+    try {
+     
+      let getUserInfor = await userModel.getNormalUserDataById(contactId) ; 
+      let getMessages = await messageModel.model.getMessagesInPersonal(currentUserId , contactId , LIMIT_MESSAGES); 
+      getUserInfor = getUserInfor.toObject() ; 
+      getUserInfor.messages = _.reverse(getMessages) ; 
+      
+      resolve(getUserInfor);
+    } catch (error) {
+      reject(error);
+    }
+  })
+};
+
+
+
 module.exports = {
   getAllConversationItems: getAllConversationItems, 
   addNewTextEmoji : addNewTextEmoji,
   addNewImage : addNewImage,
   addNewAttachment : addNewAttachment,
   readMoreAllChats : readMoreAllChats,
-  readMoreMessages : readMoreMessages
+  readMoreMessages : readMoreMessages,
+  readMorePersonalChat : readMorePersonalChat,
+  readMoreGroupChat : readMoreGroupChat ,
+  chatWithFriendFromContactList : chatWithFriendFromContactList
 }

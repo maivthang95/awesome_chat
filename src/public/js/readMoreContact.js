@@ -63,6 +63,8 @@ function callReadMoreContacts(){
      }
      $("#contacts ul").append(userContactInfor);
      removeContact();
+     
+     chatFromContactList();
     })
     $("#link-read-more-contacts").css("display" , "inline-block")
     $(".read-more-contacts-loading").css("display" , "none");
