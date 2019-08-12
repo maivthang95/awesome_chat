@@ -27,7 +27,8 @@ export const transErrors = {
   conversation_not_found : "Cuốc trò chuyện không tồn tại",
   image_type : "Kieu file khong hop le, chi chap nhan jpg,jpeg,png" ,
   image_size : "Anh upload toi da chi duoc 1MB" ,
-  attachment_size : "Anh upload toi da chi duoc 1MB" 
+  attachment_size : "Anh upload toi da chi duoc 1MB" ,
+  default_error : 'Có lỗi xảy ra, vui lòng thử lại' 
 };
 
 export const transSuccess = {

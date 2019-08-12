@@ -1,9 +1,11 @@
 import contactModel from "./../models/contactModel";
 import userModel from "./../models/userModel";
-import NotificationModel from "./../models/notificationModel"
+import NotificationModel from "./../models/notificationModel";
+import messageModel from "./../models/messageModel";
 import _ from "lodash";
 
 const LIMIT_NUMBER = 4 ; 
+const LIMIT_MESSAGES = 20 ;
 let findUserContact = ( currentUserId , keyword ) => {
   return new Promise ( async (resolve , reject) => {
     let deprecatedUserIds = [currentUserId]  ;
@@ -144,7 +146,8 @@ let countAllContactsReceived = (currenUserId  ) => {
 let readMoreContacts = (currentUserId , skipNumber) => {
   return new Promise( async (resolve , reject) => {
     try {
-      let newContacts = await contactModel.readMoreContacts(currentUserId , skipNumber , LIMIT_NUMBER);
+      let newContacts = await contactModel.readMoreContactHasException(currentUserId , skipNumber , LIMIT_NUMBER);
+      
       let getContactUsers = newContacts.map(async (contact) => {
         if(contact.contactId == currentUserId){
           return await userModel.getNormalUserDataById(contact.userId) ;
@@ -259,6 +262,37 @@ let seachFriends = (userId , keyword ) => {
     }
   })
 }
+
+let findUserContactAtNavbar = (currentUserId , keyword ) => {
+  return new Promise (async  (resolve , reject ) => {
+    try {
+      
+      let contacts = await contactModel.findAllByUsers(currentUserId);
+      let listId = [] ;
+      contacts.forEach( contact => {
+        listId.push(contact.userId) ; 
+        listId.push(contact.contactId) ;
+      })
+      
+      listId = _.uniqBy(listId);
+      listId = listId.filter( userId => userId != currentUserId);
+      
+      let usersConversation = await userModel.findUserContactAtNavbar(listId , keyword);
+  
+      let usersConversationWithMessagesPromise = usersConversation.map( async conversation => {
+        conversation = conversation.toObject();
+        let getMessages = await messageModel.model.getMessagesInPersonal(currentUserId , conversation._id , LIMIT_MESSAGES );
+        conversation.messages = _.reverse(getMessages) ; 
+        return conversation ; 
+      })
+
+      let usersConversationWithMessages = await Promise.all(usersConversationWithMessagesPromise);
+      resolve(usersConversationWithMessages);
+    } catch (error) {
+      reject(error);
+    }
+  })
+}
 module.exports = {
   findUserContact : findUserContact,
   addNew : addNew ,
@@ -275,5 +309,6 @@ module.exports = {
   readMoreContactsReceived : readMoreContactsReceived,
   approveRequestContactReceived : approveRequestContactReceived,
   removeContact : removeContact ,
-  seachFriends : seachFriends
+  seachFriends : seachFriends,
+  findUserContactAtNavbar : findUserContactAtNavbar
 }

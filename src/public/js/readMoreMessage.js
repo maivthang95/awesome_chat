@@ -1,13 +1,12 @@
 function readMoreMessages(){
-  $(".right .chat").scroll(function(){
+  $(".right .chat").off("scroll").on("scroll" , function(){
     //get first message
     
     let firstMessage = $(this).find("div.bubble:first");
     //get position of first message 
     
     let currentOffsetTop = firstMessage.offset().top - $(this).scrollTop();
-    console.log(firstMessage.offset().top );
-    console.log($(this).scrollTop());
+  
     if($(this).scrollTop() === 0){
       let messageLoading = `<img src="images/chat/message-loading.gif" class="message-loading" />`;
       $(this).prepend(messageLoading);
@@ -18,7 +17,7 @@ function readMoreMessages(){
       $.get(`/message/read-more-messages?skipMessages=${skipMessage}&targetId=${targetId}&chatInGroup=${chatInGroup}`,function(data){
         //Step01 : handle RightSide
         $(`.chat[data-chat = ${targetId}]`).prepend(data.rightSideData);
-       console.log(firstMessage.offset().top )
+       
         $(`.chat[data-chat = ${targetId}]`).scrollTop(firstMessage.offset().top -  currentOffsetTop);
         //Step02 : prevent Scroll
         

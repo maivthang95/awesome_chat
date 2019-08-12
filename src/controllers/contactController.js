@@ -1,7 +1,10 @@
 import {contact} from "./../services/index";
 import {validationResult  } from "express-validator/check";
-
-
+import { message } from ".";
+import {promisify} from "util"
+import ejs from "ejs" ; 
+import {bufferToBase64 , lastItemOfArray , convertTimeStampToHumanTime} from "./../helpers/clientHelper"
+const renderFile = promisify(ejs.renderFile).bind(ejs);
 let findUserContact =  async(req , res) => {
   let errorArr = [] ; 
 
@@ -134,6 +137,17 @@ let searchFriends = async ( req , res ) => {
   }
 }
 
+let findUserContactAtNavbar = async (req , res) => {
+  try {
+    let keyword = req.params.keyword ;
+     let newMessages = await contact.findUserContactAtNavbar(req.user._id , keyword); 
+
+    return res.status(200).send({newMessages : newMessages})
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+}
+
 module.exports = {
   findUserContact : findUserContact,
   addNew : addNew,
@@ -144,5 +158,6 @@ module.exports = {
   removeRequestContactReceived : removeRequestContactReceived,
   approveRequestContactReceived : approveRequestContactReceived,
   removeContact : removeContact,
-  searchFriends : searchFriends
+  searchFriends : searchFriends,
+  findUserContactAtNavbar : findUserContactAtNavbar
 }

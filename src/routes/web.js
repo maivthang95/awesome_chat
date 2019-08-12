@@ -1,15 +1,15 @@
-import express from "express" ; 
-import {home,auth,user, contact,notification ,message , groupChat} from "./../controllers/index";
-import {authValid, userValid , contactValid,messageValid, groupChatValid} from "./../validation/index";
+import express from "express";
+import { home, auth, user, contact, notification, message, groupChat } from "./../controllers/index";
+import { authValid, userValid, contactValid, messageValid, groupChatValid } from "./../validation/index";
 import passport from "passport"
 import initPassportLocal from "./../controllers/passportController/local";
 import initPassportFacebook from "./../controllers/passportController/facebook";
 import initPassportGoogle from "./../controllers/passportController/google";
 //init all passport 
 initPassportLocal();
-initPassportFacebook() ;
-initPassportGoogle() ;
-let router = express.Router() ; 
+initPassportFacebook();
+initPassportGoogle();
+let router = express.Router();
 
 
 /**
@@ -18,57 +18,62 @@ let router = express.Router() ;
  */
 
 let initRoutes = (app) => {
-  
-  router.get("/login-register" , auth.checkLoggedOut  , auth.getLoginRegister) ;
-  router.post("/register" , auth.checkLoggedOut , authValid.register ,auth.postRegister) ;
-  router.get("/verify/:token" ,auth.checkLoggedOut , auth.verifyAccount);
-  router.post("/login" ,auth.checkLoggedOut  , passport.authenticate("local",{
-    successRedirect : "/" , 
-    failureRedirect : "login-register" , 
-    successFlash : true , 
-    failureFlash : true 
-  }));
 
-  router.get("/auth/facebook" , auth.checkLoggedOut, passport.authenticate("facebook" , {scope : ["email"]}))
-  router.get("/auth/facebook/callback" ,auth.checkLoggedOut, passport.authenticate("facebook" , {
-    successRedirect : "/" ,
-    failureRedirect : "/login-register" 
-  }))
+    router.get("/login-register", auth.checkLoggedOut, auth.getLoginRegister);
+    router.post("/register", auth.checkLoggedOut, authValid.register, auth.postRegister);
+    router.get("/verify/:token", auth.checkLoggedOut, auth.verifyAccount);
+    router.post("/login", auth.checkLoggedOut, passport.authenticate("local", {
+        successRedirect: "/",
+        failureRedirect: "login-register",
+        successFlash: true,
+        failureFlash: true
+    }));
 
-  router.get("/auth/google" , passport.authenticate("google" , {scope: ["email"]}))
-  router.get("/auth/google/callback" , passport.authenticate("google" , {
-    successRedirect : "/" , 
-    failureRedirect : "/login-register" 
-  }))
-  router.get("/", auth.checkLoggedIn , home.getHome );
-  router.get("/logout" , auth.checkLoggedIn ,auth.logoutAccount)
+    router.get("/auth/facebook", auth.checkLoggedOut, passport.authenticate("facebook", { scope: ["email"] }))
+    router.get("/auth/facebook/callback", auth.checkLoggedOut, passport.authenticate("facebook", {
+        successRedirect: "/",
+        failureRedirect: "/login-register"
+    }))
 
-  router.put("/user/update-avatar" , auth.checkLoggedIn , user.updateAvatar );
-  router.put("/user/update-info" , auth.checkLoggedIn , userValid.updateInfo, user.updateInfo);
-  router.put("/user/update-password" , auth.checkLoggedIn , userValid.updatePassword , user.updatePassword)
+    router.get("/auth/google", passport.authenticate("google", { scope: ["email"] }))
+    router.get("/auth/google/callback", passport.authenticate("google", {
+        successRedirect: "/",
+        failureRedirect: "/login-register"
+    }))
+    router.get("/", auth.checkLoggedIn, home.getHome);
+    router.get("/logout", auth.checkLoggedIn, auth.logoutAccount)
 
-  router.get("/contact/find-users/:keyword" , auth.checkLoggedIn, contactValid.findUserContact ,  contact.findUserContact);
-  router.post("/contact/add-new" , auth.checkLoggedIn , contact.addNew);
-  router.delete("/contact/remove-contact",  auth.checkLoggedIn , contact.removeContact);
-  router.delete("/contact/remove-request-contact-sent" , auth.checkLoggedIn , contact.removeRequestContactSent);
-  router.delete("/contact/remove-request-contact-received" , auth.checkLoggedIn , contact.removeRequestContactReceived);
-  router.put("/contact/approve-request-contact-received" , auth.checkLoggedIn , contact.approveRequestContactReceived);
-  router.get("/contact/search-friends/:keyword" , auth.checkLoggedIn , contactValid.searchFriends, contact.searchFriends )
-  
-  router.get("/notification/read-more" , auth.checkLoggedIn , notification.readMore );
-  router.put("/notification/mark-all-as-read" , auth.checkLoggedIn , notification.markAllAsRead);
-  router.get("/contacts/read-more-contacts" , auth.checkLoggedIn , contact.readMoreContacts);
-  router.get("/contacts/read-more-contacts-sent" , auth.checkLoggedIn , contact.readMoreContactsSent);
-  router.get("/contacts/read-more-contacts-received" , auth.checkLoggedIn , contact.readMoreContactsReceived);
- 
-  router.post("/message/add-new-text-emoji" , auth.checkLoggedIn , messageValid.checkMessageLength , message.addNewTextEmoji);
-  router.post("/message/add-new-image" , auth.checkLoggedIn , message.addNewImage );
-  router.post("/message/add-new-attachment" , auth.checkLoggedIn , message.addNewAttachment);
-  router.get("/messages/read-more-all-chat" , auth.checkLoggedIn , message.readMoreAllChats) ;
-  router.get("/message/read-more-messages" , auth.checkLoggedIn , message.readMoreMessages) ;
+    router.put("/user/update-avatar", auth.checkLoggedIn, user.updateAvatar);
+    router.put("/user/update-info", auth.checkLoggedIn, userValid.updateInfo, user.updateInfo);
+    router.put("/user/update-password", auth.checkLoggedIn, userValid.updatePassword, user.updatePassword)
 
-  router.post("/group-chat/add-new" , auth.checkLoggedIn ,groupChatValid.addNewGroupChat ,  groupChat.addNewGroupChat)
-  app.use("/" , router )
+    router.get("/contact/find-users/:keyword", auth.checkLoggedIn, contactValid.findUserContact, contact.findUserContact);
+    router.post("/contact/add-new", auth.checkLoggedIn, contact.addNew);
+    router.delete("/contact/remove-contact", auth.checkLoggedIn, contact.removeContact);
+    router.delete("/contact/remove-request-contact-sent", auth.checkLoggedIn, contact.removeRequestContactSent);
+    router.delete("/contact/remove-request-contact-received", auth.checkLoggedIn, contact.removeRequestContactReceived);
+    router.put("/contact/approve-request-contact-received", auth.checkLoggedIn, contact.approveRequestContactReceived);
+    router.get("/contact/search-friends/:keyword", auth.checkLoggedIn, contactValid.searchFriends, contact.searchFriends)
+    router.get("/contact/find-user-contact-at-navbar/:keyword", auth.checkLoggedIn, contact.findUserContactAtNavbar);
+
+    router.get("/notification/read-more", auth.checkLoggedIn, notification.readMore);
+    router.put("/notification/mark-all-as-read", auth.checkLoggedIn, notification.markAllAsRead);
+    router.get("/contacts/read-more-contacts", auth.checkLoggedIn, contact.readMoreContacts);
+    router.get("/contacts/read-more-contacts-sent", auth.checkLoggedIn, contact.readMoreContactsSent);
+    router.get("/contacts/read-more-contacts-received", auth.checkLoggedIn, contact.readMoreContactsReceived);
+
+    router.post("/message/add-new-text-emoji", auth.checkLoggedIn, messageValid.checkMessageLength, message.addNewTextEmoji);
+    router.post("/message/add-new-image", auth.checkLoggedIn, message.addNewImage);
+    router.post("/message/add-new-attachment", auth.checkLoggedIn, message.addNewAttachment);
+    router.get("/messages/read-more-all-chat", auth.checkLoggedIn, message.readMoreAllChats);
+    router.get("/message/read-more-messages", auth.checkLoggedIn, message.readMoreMessages);
+    router.get("/message/read-more-personal-chat", auth.checkLoggedIn, message.readMorePersonalChat);
+    router.get("/message/read-more-group-chat", auth.checkLoggedIn, message.readMoreGroupChat);
+    router.get("/message/chat-with-friend-from-contact-list", auth.checkLoggedIn, message.chatWithFriendFromContactList)
+
+    router.post("/group-chat/add-new", auth.checkLoggedIn, groupChatValid.addNewGroupChat, groupChat.addNewGroupChat)
+    router.get("/group-chat/get-members-in-group", auth.checkLoggedIn, groupChat.getMembersInGroup)
+    app.use("/", router)
 }
 
 module.exports = initRoutes;
