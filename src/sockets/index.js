@@ -10,7 +10,8 @@ import chatImage from "./chat/chatImage" ;
 import chatAttachment from "./chat/chatAttachment";
 import chatVideo from "./chat/chatVideo";
 import userOnlineOffline from "./status/userOnlineOffline";
-import newGroupChat from "./group/newGroupChat"
+import newGroupChat from "./group/newGroupChat";
+import removeMemberRequestContactSent from "./group/removeMemberRequestContactSent"
 /**
  * 
  * @param io from socket.io lib
@@ -29,6 +30,7 @@ let initSockets = (io) => {
   chatVideo(io);
   userOnlineOffline(io);
   newGroupChat(io);
+  removeMemberRequestContactSent(io);
   //
 }
 

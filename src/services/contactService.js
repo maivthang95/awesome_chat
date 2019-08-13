@@ -45,7 +45,7 @@ let addNew = (currentUserId , contactId) => {
     await NotificationModel.model.createNew(notificationItem);
     resolve(newContact)
   })
-}
+};
 
 let removeRequestContactSent = (currenUserId , contactId ) => {
   return new Promise(async (resolve , reject) => {
@@ -59,7 +59,7 @@ let removeRequestContactSent = (currenUserId , contactId ) => {
     await NotificationModel.model.removeRequestContactSentNotification(currenUserId , contactId , NotificationAddContact );
     resolve(true);
   })
-}
+};
 
 let getContacts = (currenUserId  ) => {
   return new Promise(async (resolve , reject) => {
@@ -77,7 +77,7 @@ let getContacts = (currenUserId  ) => {
       reject(error)
     }
   })
-}
+};
 
 let getContactsSent = (currenUserId  ) => {
   return new Promise(async (resolve , reject) => {
@@ -92,7 +92,7 @@ let getContactsSent = (currenUserId  ) => {
       reject(error)
     }
   })
-}
+};
 
 let getContactsReceived = (currenUserId  ) => {
   return new Promise(async (resolve , reject) => {
@@ -106,7 +106,7 @@ let getContactsReceived = (currenUserId  ) => {
       reject(error)
     }
   })
-}
+};
 
 
 let countAllContacts = (currenUserId  ) => {
@@ -118,7 +118,7 @@ let countAllContacts = (currenUserId  ) => {
       reject(error)
     }
   })
-}
+};
 
 let countAllContactsSent = (currenUserId  ) => {
   return new Promise(async (resolve , reject) => {
@@ -129,7 +129,7 @@ let countAllContactsSent = (currenUserId  ) => {
       reject(error)
     }
   })
-}
+};
 
 
 let countAllContactsReceived = (currenUserId  ) => {
@@ -141,7 +141,7 @@ let countAllContactsReceived = (currenUserId  ) => {
       reject(error)
     }
   })
-}
+};
 
 let readMoreContacts = (currentUserId , skipNumber) => {
   return new Promise( async (resolve , reject) => {
@@ -161,7 +161,7 @@ let readMoreContacts = (currentUserId , skipNumber) => {
       reject(error);
     }
   })
-}
+};
 
 let readMoreContactsSent = (currentUserId , skipNumber) => {
   return new Promise ( async (resolve , reject ) => {
@@ -175,7 +175,7 @@ let readMoreContactsSent = (currentUserId , skipNumber) => {
       reject(error);
     }
   })
-}
+};
 
 
 let readMoreContactsReceived = (currentUserId , skipNumber ) => {
@@ -192,7 +192,7 @@ let readMoreContactsReceived = (currentUserId , skipNumber ) => {
       reject(error) ;
     }
   })
-}
+};
 
 
 let removeRequestContactReceived = (currenUserId , contactId ) => {
@@ -207,7 +207,7 @@ let removeRequestContactReceived = (currenUserId , contactId ) => {
     // await NotificationModel.model.removeRequestContactSentNotification(currenUserId , contactId , NotificationAddContact );
     resolve(true);
   })
-}
+};
 
 
 let approveRequestContactReceived = (currenUserId , contactId ) => {
@@ -227,7 +227,7 @@ let approveRequestContactReceived = (currenUserId , contactId ) => {
     await NotificationModel.model.createNew(notificationItem);
     resolve(true);
   })
-}
+};
 
 let removeContact = (currentUserId , contactId) => {
   return new Promise(async (resolve , reject ) => {
@@ -241,7 +241,7 @@ let removeContact = (currentUserId , contactId) => {
       reject(error);
     }
   })
-}
+};
 
 let seachFriends = (userId , keyword ) => {
   return new Promise ( async(resolve , reject ) => {
@@ -261,7 +261,7 @@ let seachFriends = (userId , keyword ) => {
       reject(error) ; 
     }
   })
-}
+};
 
 let findUserContactAtNavbar = (currentUserId , keyword ) => {
   return new Promise (async  (resolve , reject ) => {
@@ -292,6 +292,38 @@ let findUserContactAtNavbar = (currentUserId , keyword ) => {
       reject(error);
     }
   })
+};
+
+let addNewContactFromGroupChat = (currentUserId , contactId) => {
+  return new Promise (async (resolve , reject ) => {
+    try {
+      let contactExists = await contactModel.checkExists( currentUserId , contactId )
+      if(contactExists){
+        return reject(false ) ;
+      }
+      //create Contact
+      let newContactItem = {
+        userId : currentUserId ,
+        contactId :contactId
+      }
+      let newContact = await contactModel.createNew(newContactItem);
+      let getContactInfor = await userModel.findUserByIdForSessionToUse(contactId); 
+      //create Notification
+      let notificationItem = {
+        senderId : currentUserId , 
+        receiverId : contactId , 
+        type : NotificationModel.types.ADD_CONTACT
+      }
+
+      await NotificationModel.model.createNew(notificationItem);
+      
+      resolve({
+        success : true ,
+        contactInfor : getContactInfor});
+    } catch (error) {
+      reject(error);
+    } 
+  })
 }
 module.exports = {
   findUserContact : findUserContact,
@@ -310,5 +342,6 @@ module.exports = {
   approveRequestContactReceived : approveRequestContactReceived,
   removeContact : removeContact ,
   seachFriends : seachFriends,
-  findUserContactAtNavbar : findUserContactAtNavbar
+  findUserContactAtNavbar : findUserContactAtNavbar,
+  addNewContactFromGroupChat : addNewContactFromGroupChat
 }

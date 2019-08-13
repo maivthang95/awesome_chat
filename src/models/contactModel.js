@@ -71,13 +71,9 @@ contactSchema.statics = {
      */
     getContacts(userId, limit) {
         return this.find({
-            $and: [{
-                    $or: [
-                        { "userId": userId },
-                        { "contactId": userId }
-                    ]
-                },
-                { "status": true }
+            $or: [
+                { "userId": userId },
+                { "contactId": userId }
             ]
         }).sort({ "updatedAt": -1 }).limit(limit).exec();
     },

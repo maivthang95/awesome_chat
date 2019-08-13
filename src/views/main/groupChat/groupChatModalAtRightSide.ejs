@@ -1,3 +1,4 @@
+<% getGroupAndAllMembersInfor.forEach( group => {%>
 <div class="modal fade" id="groupChatModalAtRightSide_<%= group._id %>" class="show-members-in-group">
     <div class="modal-dialog modal-lg">
         <div class="modal-content ">
@@ -20,11 +21,11 @@
                 </div>
                 <div class="container-fluid">
                     <div class="row" style="margin-top:10px">
-                        <div id="list-members">
+                        <div>
                             <div class="membersList row" style="margin-top:5px">
-                                <% members.forEach ( ( member , index ) => { %>
+                                <% group.membersInfor.forEach ( ( member , index ) => { %>
                                     <% if(index == 0 ) {%>
-                                        <div data-uid="<%= member._id %>" class="col-md-4 col-sm-12">
+                                        <div data-uid="<%= member._id %>"  class="col-md-4 col-sm-12">
                                             <div class="groupPanel text-center">
                                                 <div class="member-avatar">
                                                     <img src="images/users/<%= member.avatar %>" />
@@ -42,7 +43,7 @@
                                             </div>
                                         </div>
                                         <% } else { %>
-                                            <div data-uid="<%= member._id %>" class="col-md-4 col-sm-12">
+                                            <div data-uid="<%= member._id %>"  class="col-md-4 col-sm-12">
                                                 <div class="groupPanel text-center">
                                                     <div class="member-avatar">
                                                         <img src="images/users/<%= member.avatar %>" />
@@ -63,22 +64,22 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-6 col-sm-pull-1 ">
-                                                                <div class="member-talk" data-uid="<%= member._id %>">
+                                                                <div class="member-talk" data-uid="<%= member._id %>" data-group-uid="<%= group._id %>">
                                                                     Nhắn tin
                                                                 </div>
                                                             </div>
                                                             <%}else {%>
                                                                 <div class="col-sm-6 col-sm-push-3">
-                                                                    <div class="member-talk" data-uid="<%= member._id %>">
+                                                                    <div class="member-talk" data-uid="<%= member._id %>" data-group-uid="<%= group._id %>">
                                                                         Nhắn tin
                                                                     </div>
                                                                 </div>
-                                                                <%}%>
+                                                            <%}%>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <%}%>
-                                                <%})%>
+                                        <%}%>
+                                    <%})%>
                             </div>
                         </div>
                     </div>
@@ -89,3 +90,4 @@
         </div>
     </div>
 </div>
+<%})%>

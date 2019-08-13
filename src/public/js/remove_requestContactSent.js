@@ -15,12 +15,13 @@ function removeRequestContactSent(){
           decreaseNotification("noti_contact_counter", 1); //js.calculateNotification.js
           $("#request-contact-sent").find(`li[data-uid = ${targetId}]`).remove();
           socket.emit("remove-request-contact-sent" , {contactId : targetId}) 
-          
+          socket.emit("remove-member-request-contact-sent" , {contactId : targetId}) ;
         }
       }
     });
   })
 }
+
 
 $(document).ready(function () {
   removeRequestContactSent();

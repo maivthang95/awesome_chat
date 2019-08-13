@@ -1,4 +1,4 @@
-import {notification,contact,message} from "./../services/index";
+import {notification,contact,message , groupChat} from "./../services/index";
 import {bufferToBase64 ,lastItemOfArray , convertTimeStampToHumanTime} from "./../helpers/clientHelper";
 import request from "request";
 let getICETurnServer = () => {
@@ -57,6 +57,8 @@ let getHome = async (req , res) => {
 
   let getAllConversationItems = await message.getAllConversationItems(req.user._id);
 
+  let getGroupAndAllMembersInfor = await groupChat.getGroupInforAndAllMembers( req.user._id) ; 
+
   let allConversationsWithMessages = getAllConversationItems.allConversationsWithMessages ; 
 
   //get ICE list from xirsys turn server
@@ -74,12 +76,14 @@ let getHome = async (req , res) => {
     countAllContacts : countAllContacts ,
     countAllContactsSent : countAllContactsSent,
     countAllContactsReceived : countAllContactsReceived,
-
+    getGroupAndAllMembersInfor : getGroupAndAllMembersInfor,
     allConversationsWithMessages : allConversationsWithMessages,
+    
     bufferToBase64 : bufferToBase64,
     lastItemOfArray : lastItemOfArray,
     convertTimeStampToHumanTime : convertTimeStampToHumanTime,
-    iceServersList : JSON.stringify(iceServersList)
+    iceServersList : JSON.stringify(iceServersList),
+    
   }); 
 }
 

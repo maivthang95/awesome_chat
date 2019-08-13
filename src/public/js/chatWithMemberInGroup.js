@@ -1,13 +1,16 @@
-function chatWithMemberInGroup(href) {
+function chatWithMemberInGroup() {
     $(".member-talk").off("click").on("click", function() {
         let targetId = $(this).data("uid");
+        let groupId = $(this).data("group-uid");
+
         $.get(`/message/chat-with-friend-from-contact-list?targetId=${targetId}`, function(data) {
+            //Close modal members in group
             $(`a[href='#uid_${targetId}']`).remove();
             $(`#screen-chat`).find(`#to_${targetId}`).remove();
             $(`#imagesModal_${targetId}`).remove();
             $(`attachmentModal_${targetId}`).remove();
-            //Close modal members in group
-            $(href).modal("hide");
+            
+            $(`#groupChatModalAtRightSide_${groupId}`).modal("hide");
             //handle LeftSide 
             $("#all-chat").find("ul.people").prepend(data.leftSidePersonalData);
             $("#user-chat").find("ul.people").prepend(data.leftSidePersonalData);
@@ -26,7 +29,7 @@ function chatWithMemberInGroup(href) {
             $("body").prepend(data.attachmentModalData);
 
             socket.emit("check-status");
-
+            
             readMoreMessages();
             $(".person").removeClass("active");
 

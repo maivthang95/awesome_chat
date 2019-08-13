@@ -25,10 +25,11 @@ function callReadMoreAllChats() {
 
             //Step03 :handle rightSide 
             $("#screen-chat").append(data.rightSideData);
-            convertEmoji();
-            findMembersInGroupChat();
+
             //Step04: call function screen chat 
             changeScreenChat();
+
+            convertEmoji();
 
             //Step05 : handle image Modal
             $("body").append(data.imageModalData);
@@ -66,7 +67,7 @@ function callReadMoreUserChat() {
         resizeNiceScrollLeft();
         //step03 : handle rightSide 
         $("#screen-chat").append(data.rightSidePersonalData);
-        findMembersInGroupChat();
+        
         //step04 : call function changeScreenChat();
         changeScreenChat();
         //step05 : convert Emoji Chat
@@ -121,7 +122,7 @@ function callReadMoreGroupChat() {
         $(".read-more-group-chat-loading").css("display", "none");
 
         readMoreMessages();
-        findMembersInGroupChat();
+        
 
     })
 }

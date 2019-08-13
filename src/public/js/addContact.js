@@ -5,6 +5,8 @@ function addContact(){
     let targetId =$(this).data("uid");
     $.post("/contact/add-new", {uid: targetId} , function(data){
       if(data.success){
+        $("div.membersList").find(`div.member-request-contact-sent[data-uid=${targetId}]`).hide();
+        $("div.membersList").find(`div.member-cancel-contact-sent[data-uid=${targetId}]`).css("display" , "inline-block");
         $("#find-user").find(`div.user-add-new-contact[data-uid = ${targetId}]`).hide();
         $("#find-user").find(`div.user-remove-request-contact-sent[data-uid = ${targetId}]`).css("display" , "inline-block")
 
@@ -13,10 +15,11 @@ function addContact(){
         let userInfoHTML = $("#find-user").find(`ul li[data-uid = ${targetId}]`).get(0).outerHTML ; 
 
         $("#request-contact-sent").find("ul").prepend(userInfoHTML);
-        removeRequestContactSent();
+        
 
         socket.emit("add-new-contact" , {contactId : targetId});
-        
+        removeRequestContactSent();
+       // removeMemberRequestContactSent();
       }
     })
 

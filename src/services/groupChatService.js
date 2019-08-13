@@ -2,6 +2,7 @@ import _ from "lodash";
 import chatGroupModel from "./../models/chatGroupModel";
 import userModel from "./../models/userModel";
 import contactModel from "./../models/contactModel";
+
 let addNewGroupChat = (currentUserId, usersIdList, groupChatName) => {
     return new Promise(async(resolve, reject) => {
         try {
@@ -71,7 +72,54 @@ let getMembersInGroup = (currentUserId, groupId) => {
         }
     })
 }
+
+let getGroupInforAndAllMembers = (currentUserId) => {
+    return new Promise ( async (resolve , reject ) => {
+        try {
+            currentUserId = currentUserId.toString();
+            let getGroupsInfor = await chatGroupModel.getGroupsHaveCurrentUserId(currentUserId);
+           
+            let groupWithAllMembesInfo = getGroupsInfor.map( async group => {
+                group = group.toObject();
+                let idMembers = group.members.map( member => {
+                    return member.userId ;
+                })
+                
+                let membersInforInGroup = await userModel.findMembersByIdList(idMembers);
+                let myInfor = "" ; 
+                membersInforInGroup.forEach( (member,index) => {
+                    if(member._id == currentUserId && index != 0){
+                        myInfor = member ; 
+                        membersInforInGroup.splice(index,1);
+                        membersInforInGroup.unshift(myInfor);
+                    }
+                })
+                let membersInforWithCheckContactPromise = membersInforInGroup.map(async member => {
+                    member = member.toObject();
+                    let checkContact = await contactModel.checkIsFriend(currentUserId, member._id);
+                    member.isFriend = false;
+                    if (checkContact.length) {
+                        member.isFriend = true;
+                    }
+                    return member;
+                })
+                
+                let membersInforWithCheckContact = await Promise.all(membersInforWithCheckContactPromise);
+                //check Members are friend or not 
+
+                group.membersInfor = membersInforWithCheckContact ;
+                
+                return group;       
+            })
+            
+            resolve( await Promise.all(groupWithAllMembesInfo) );
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
 module.exports = {
     addNewGroupChat: addNewGroupChat,
-    getMembersInGroup: getMembersInGroup
+    getMembersInGroup: getMembersInGroup,
+    getGroupInforAndAllMembers : getGroupInforAndAllMembers
 }

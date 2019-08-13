@@ -148,6 +148,16 @@ let findUserContactAtNavbar = async (req , res) => {
   }
 }
 
+let addNewContactFromGroupChat = async (req , res) => {
+  try {
+    let targetId = req.body.targetId ; 
+    let newContact = await contact.addNewContactFromGroupChat(req.user._id , targetId ) ;
+    return res.status(200).send(newContact);
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+}
+
 module.exports = {
   findUserContact : findUserContact,
   addNew : addNew,
@@ -159,5 +169,6 @@ module.exports = {
   approveRequestContactReceived : approveRequestContactReceived,
   removeContact : removeContact,
   searchFriends : searchFriends,
-  findUserContactAtNavbar : findUserContactAtNavbar
+  findUserContactAtNavbar : findUserContactAtNavbar,
+  addNewContactFromGroupChat : addNewContactFromGroupChat
 }
