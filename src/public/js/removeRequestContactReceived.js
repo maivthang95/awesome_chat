@@ -27,6 +27,8 @@ function removeRequestContactReceived(){
 
 
 socket.on("response-remove-request-contact-received" , (user) => {
+  $("div.membersList").find(`div.member-request-contact-sent[data-uid=${user.id}]`).show();
+  $("div.membersList").find(`div.member-cancel-contact-sent[data-uid=${user.id}]`).css("display" , "none");
   $("#find-user").find(`div.user-add-new-contact[data-uid=${user.id}]`).css("display","inline-block"); 
   $("#find-user").find(`div.user-remove-request-contact-sent[data-uid=${user.id}]`).hide();
   $("#request-contact-sent").find(`li[data-uid = ${user.id}]`).remove();

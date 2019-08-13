@@ -174,6 +174,17 @@ function changeScreenChat(){
     $(`.person[data-chat = ${divId}]`).addClass("active");
     $(this).tab("show");
     
+    $(".myImg").off("click").on("click" ,function(){
+      let dataImgId = $(this).data("img-id");
+      let getImageId = dataImgId.split("-")[1];
+      $(`#myModal-${getImageId}`).css("display" , "block");
+      $(`#myModal-${getImageId}`).find("img").attr("src" , $(this).attr("src"));
+      $(`#caption-${getImageId}`).text($(this).attr(alt));
+      
+    })
+    $(`.modal`).not($("img")).on("click" , function(){
+     $(this).css("display" , "none");
+    })
     
     //cấu hình thanh cuộn bên box chat rightSide.ejs mỗi khi click chuột vào 1 cuộc trỏ chuyện cụ thể
     nineScrollRight(divId);

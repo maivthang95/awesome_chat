@@ -41,6 +41,7 @@ let getMembersInGroup = async(req, res) => {
         return res.status(500).send(error);
     }
 }
+
 module.exports = {
     addNewGroupChat: addNewGroupChat,
     getMembersInGroup: getMembersInGroup

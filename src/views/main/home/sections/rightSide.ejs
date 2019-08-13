@@ -51,18 +51,31 @@
                                         <% if(message.messageType == "image") { %>
                                             <div class="bubble <% if (message.senderId == user._id) {%> me <%} else {%> you <%}%> bubble-image-file" data-mess-id="<%= message._id %>">
                                                 <img src="images/users/<%= message.sender.avatar %>" class="avatar-small" title="<%= message.sender.name %>">
-                                                <img src="data:<%= message.file.contentType%>;base64,<%= bufferToBase64(message.file.data) %>" class="show-image-chat">
+                                                <img class="myImg" data-img-id="myImageText-<%= message._id %>" src="data:<%= message.file.contentType%>;base64,<%= bufferToBase64(message.file.data) %>" class="show-image-chat" alt="">
+                                                <!-- The Modal -->
+                                                
                                             </div>
-                                            <%}%>
-                                                <% if(message.messageType == "file") { %>
-                                                    <div class="bubble <% if (message.senderId == user._id) {%> me <%} else {%> you <%}%> bubble-image-file" data-mess-id="<%= message._id %>">
-                                                        <img src="images/users/<%= message.sender.avatar %>" class="avatar-small" title="<%= message.sender.name %>">
-                                                        <a href="data:<%= message.file.contentType %>;base64 ,<%= bufferToBase64(message.file.data)%>" download="<%= message.file.fileName %>">T
-                                            <%= message.file.fileName %>
-                                        </a>
-                                                    </div>
-                                                    <%}%>
-                                                        <%})%>
+                                            <div id="myModal-<%= message._id %>" class="modal">
+
+                                                <!-- The Close Button -->
+                                                <span class="close">&times;</span>
+                                            
+                                                <!-- Modal Content (The Image) -->
+                                                <img class="modal-content" id="img-<%=message._id %>"> 
+                                            
+                                                <!-- Modal Caption (Image Text) -->
+                                                <div class="caption" id="caption-<%= message._id %>"></div>
+                                            </div>
+                                        <%}%>
+                                        <% if(message.messageType == "file") { %>
+                                            <div class="bubble <% if (message.senderId == user._id) {%> me <%} else {%> you <%}%> bubble-image-file" data-mess-id="<%= message._id %>">
+                                                <img src="images/users/<%= message.sender.avatar %>" class="avatar-small" title="<%= message.sender.name %>">
+                                                <a href="data:<%= message.file.contentType %>;base64 ,<%= bufferToBase64(message.file.data)%>" download="<%= message.file.fileName %>">T
+                                                 <%= message.file.fileName %>
+                                                </a>
+                                            </div>
+                                        <%}%>
+                            <%})%>
                         </div>
                     </div>
                     <div class="write" data-chat="<%= conversation._id %>">
@@ -115,17 +128,28 @@
                                         <%}%>
                                             <% if(message.messageType == "image") { %>
                                                 <div class="bubble <% if (message.senderId == user._id) {%> me <%} else {%> you <%}%> bubble-image-file" data-mess-id="<%= message._id %>">
-                                                    <img src="data:<%= message.file.contentType%>;base64,<%= bufferToBase64(message.file.data) %>" class="show-image-chat">
+                                                    <img class="myImg" data-img-id="myImageText-<%= message._id %>" src="data:<%= message.file.contentType%>;base64,<%= bufferToBase64(message.file.data) %>" class="show-image-chat" alt="">   
+                                                </div>
+                                                <div id="myModal-<%= message._id %>" class="modal">
+
+                                                    <!-- The Close Button -->
+                                                    <span class="close">&times;</span>
+                                                
+                                                    <!-- Modal Content (The Image) -->
+                                                    <img class="modal-content" id="img-<%=message._id %>"> 
+                                                
+                                                    <!-- Modal Caption (Image Text) -->
+                                                    <div class="caption" id="caption-<%= message._id %>"></div>
                                                 </div>
                                                 <%}%>
                                                     <% if(message.messageType == "file") { %>
                                                         <div class="bubble <% if (message.senderId == user._id) {%> me <%} else {%> you <%}%> bubble-image-file" data-mess-id="${item._id}">
                                                             <a href="data:<%= message.file.contentType %>;base64 ,<%= bufferToBase64(message.file.data)%>" download="<%= message.file.fileName %>">T
-                                                <%= message.file.fileName %>
-                                            </a>
-                                                        </div>
-                                                        <%}%>
-                                                            <%})%>
+                                                            <%= message.file.fileName %>
+                                                            </a>
+                                                         </div>
+                                                    <%}%>
+                                            <%})%>
                             </div>
                         </div>
                         <div class="write" data-chat="<%= conversation._id %>">

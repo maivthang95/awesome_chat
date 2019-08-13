@@ -55,6 +55,7 @@ let initRoutes = (app) => {
     router.put("/contact/approve-request-contact-received", auth.checkLoggedIn, contact.approveRequestContactReceived);
     router.get("/contact/search-friends/:keyword", auth.checkLoggedIn, contactValid.searchFriends, contact.searchFriends)
     router.get("/contact/find-user-contact-at-navbar/:keyword", auth.checkLoggedIn, contact.findUserContactAtNavbar);
+    router.post("/contact/add-new-contact-from-group-chat" , auth.checkLoggedIn , contact.addNewContactFromGroupChat);
 
     router.get("/notification/read-more", auth.checkLoggedIn, notification.readMore);
     router.put("/notification/mark-all-as-read", auth.checkLoggedIn, notification.markAllAsRead);
