@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/maivthang95/awesome_chat#readme",
   "dependencies": {
-    "bcrypt": "^1.0.3",
+    "bcrypt": "^5.0.0",
     "bluebird": "^3.5.3",
     "body-parser": "^1.18.2",
     "bower": "^1.8.8",
